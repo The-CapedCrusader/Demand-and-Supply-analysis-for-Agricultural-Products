@@ -9,8 +9,16 @@ import {
 
 import type { Route } from './+types/root';
 import './app.css';
+import { getConnection } from './lib/database.server';
+import { type RowDataPacket } from 'mysql2';
 
 export const links: Route.LinksFunction = () => [];
+
+export const loader = async ({ request }: Route.LoaderArgs) => {
+  const connection = await getConnection();
+  const [rows] = await connection.query<RowDataPacket[]>('SELECT 1 as test');
+  console.log(rows);
+};
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
