@@ -1,5 +1,5 @@
 import type { Route } from './+types/_index';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import {
   IconLeaf,
   IconChartBar,
@@ -11,7 +11,6 @@ import {
   IconArrowRight,
   IconClock,
   IconDeviceAnalytics,
-  IconPlant,
   IconCoin,
 } from '@tabler/icons-react';
 import {
@@ -28,8 +27,8 @@ import { Link } from 'react-router';
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: 'New React Router App' },
-    { name: 'description', content: 'Welcome to React Router!' },
+    { title: "Krishok's" },
+    { name: 'description', content: "Krishok's" },
   ];
 }
 
@@ -130,7 +129,8 @@ export default function Home() {
                       </div>
                     ))}
                   </div>
-                  <div className="absolute top-0 left-0 p-4">
+
+                  <div className="absolute inset-x-0 bottom-0 p-4 text-center">
                     <p className="text-sm font-medium">Crop Yield Trends</p>
                   </div>
                 </div>
