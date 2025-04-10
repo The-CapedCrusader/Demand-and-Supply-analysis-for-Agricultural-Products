@@ -1,4 +1,4 @@
-import { AppSidebar } from '~/components/app-sidebar';
+import { AppSidebar } from '~/components/navigation/app-sidebar';
 import { ChartAreaInteractive } from '~/components/chart-area-interactive';
 import { SectionCards } from '~/components/section-cards';
 import { SiteHeader } from '~/components/site-header';
