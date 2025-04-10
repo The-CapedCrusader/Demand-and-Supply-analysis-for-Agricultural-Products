@@ -1,5 +1,3 @@
-'use client';
-
 import {
   IconCreditCard,
   IconDotsVertical,
@@ -26,6 +24,7 @@ import {
   useSidebar,
 } from '~/components/ui/sidebar';
 import { useFetcher } from 'react-router';
+
 export type NavUserProps = {
   user: {
     name: string;

@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Area, AreaChart, CartesianGrid, XAxis } from 'recharts';
 
 import { useIsMobile } from '~/hooks/use-mobile';
@@ -24,8 +23,7 @@ import {
   SelectValue,
 } from '~/components/ui/select';
 import { ToggleGroup, ToggleGroupItem } from '~/components/ui/toggle-group';
-
-export const description = 'An interactive area chart for crop price trends';
+import { useEffect, useMemo, useState } from 'react';
 
 const chartData = [
   { date: '2024-04-01', rice: 2.22, wheat: 1.5 },
@@ -137,27 +135,29 @@ const chartConfig = {
 
 export function ChartAreaInteractive() {
   const isMobile = useIsMobile();
-  const [timeRange, setTimeRange] = React.useState('90d');
+  const [timeRange, setTimeRange] = useState('90d');
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (isMobile) {
       setTimeRange('7d');
     }
   }, [isMobile]);
 
-  const filteredData = chartData.filter((item) => {
-    const date = new Date(item.date);
-    const referenceDate = new Date('2024-06-30');
-    let daysToSubtract = 90;
-    if (timeRange === '30d') {
-      daysToSubtract = 30;
-    } else if (timeRange === '7d') {
-      daysToSubtract = 7;
-    }
-    const startDate = new Date(referenceDate);
-    startDate.setDate(startDate.getDate() - daysToSubtract);
-    return date >= startDate;
-  });
+  const filteredData = useMemo(() => {
+    return chartData.filter((item) => {
+      const date = new Date(item.date);
+      const referenceDate = new Date('2024-06-30');
+      let daysToSubtract = 90;
+      if (timeRange === '30d') {
+        daysToSubtract = 30;
+      } else if (timeRange === '7d') {
+        daysToSubtract = 7;
+      }
+      const startDate = new Date(referenceDate);
+      startDate.setDate(startDate.getDate() - daysToSubtract);
+      return date >= startDate;
+    });
+  }, [timeRange]);
 
   return (
     <Card className="@container/card">
