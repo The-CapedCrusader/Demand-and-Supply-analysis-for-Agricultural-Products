@@ -1,46 +1,57 @@
 import { IconLeaf } from '@tabler/icons-react';
 import { Link, redirect } from 'react-router';
-import { LoginForm } from '~/components/auth/login-form';
-import type { Route } from './+types/_auth.login';
-import { MOCK_USERS } from '~/lib/dummy-users.server';
-import {
-  hashPassword,
-  isLoggedIn,
-  userDetailsCookie,
-  verifyPassword,
-} from '~/lib/password.server';
+import { SignupForm } from '~/components/auth/signup-form';
+import { isLoggedIn, userDetailsCookie } from '~/lib/password.server';
+import { MOCK_USERS, type MockUser } from '~/lib/dummy-users.server';
+import type { Route } from './+types/_auth.signup';
 
 export async function action(args: Route.ActionArgs) {
   const { request } = args;
 
   const formData = await request.formData();
+  const firstName = formData.get('firstName');
+  const lastName = formData.get('lastName');
   const email = formData.get('email');
   const password = formData.get('password');
+  const confirmPassword = formData.get('confirmPassword');
+
+  if (password !== confirmPassword) {
+    return { error: 'Passwords do not match' };
+  }
 
   const associatedUser = MOCK_USERS.find((user) => user.email === email);
-  if (!associatedUser) {
-    return { error: 'Invalid email or password' };
+  if (associatedUser) {
+    return { error: 'Email already exists' };
   }
 
   if (!password || typeof password !== 'string') {
     return { error: 'Password is required' };
   }
 
-  // TODO: we will save hashed password in the database
-  // it's just a mockup for now
-  const secretPassword = await hashPassword(associatedUser.password);
-
-  const isPasswordValid = await verifyPassword(password, secretPassword);
-  if (!isPasswordValid) {
-    return { error: 'Invalid email or password' };
+  if (!email || typeof email !== 'string') {
+    return { error: 'Email is required' };
   }
+
+  const id = crypto.randomUUID();
+  const name = `${firstName} ${lastName}`;
+  const role = 'farmer';
+
+  const newUser: MockUser = {
+    id,
+    email,
+    name,
+    role,
+    password,
+  };
+
+  MOCK_USERS.push(newUser);
 
   const cookieHeader = request.headers.get('Cookie');
   const cookie = (await userDetailsCookie.parse(cookieHeader)) ?? {};
-  cookie.id = associatedUser.id;
-  cookie.email = associatedUser.email;
-  cookie.name = associatedUser.name;
-  cookie.role = associatedUser.role;
+  cookie.id = newUser.id;
+  cookie.email = newUser.email;
+  cookie.name = newUser.name;
+  cookie.role = newUser.role;
 
   return redirect('/dashboard', {
     headers: {
@@ -59,7 +70,7 @@ export async function loader(args: Route.LoaderArgs) {
   return null;
 }
 
-export default function LoginPage() {
+export default function SignupPage() {
   return (
     <div className="grid min-h-svh lg:grid-cols-2">
       <div className="flex flex-col gap-4 p-6 md:p-10">
@@ -72,8 +83,8 @@ export default function LoginPage() {
           </Link>
         </div>
         <div className="flex flex-1 items-center justify-center">
-          <div className="w-full max-w-xs">
-            <LoginForm />
+          <div className="w-full max-w-sm">
+            <SignupForm />
           </div>
         </div>
       </div>

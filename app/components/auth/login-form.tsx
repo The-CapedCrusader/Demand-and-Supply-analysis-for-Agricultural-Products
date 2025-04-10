@@ -12,13 +12,15 @@ type LoginFormProps = {
 export function LoginForm(props: LoginFormProps) {
   const { className } = props;
 
-  const fetcher = useFetcher();
+  const fetcher = useFetcher({
+    key: 'login-form',
+  });
   const isLoading = fetcher.state !== 'idle';
   const error = fetcher.data?.error;
 
   return (
     <fetcher.Form
-      method="post"
+      method="POST"
       action="/login"
       className={cn('flex flex-col gap-6', className)}
     >

@@ -1,4 +1,12 @@
-export const MOCK_USERS = [
+export type MockUser = {
+  id: string;
+  email: string;
+  password: string;
+  name: string;
+  role: string;
+};
+
+export const MOCK_USERS: MockUser[] = [
   {
     id: '1',
     email: 'farmer@example.com',

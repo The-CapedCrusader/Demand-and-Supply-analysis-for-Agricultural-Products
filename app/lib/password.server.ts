@@ -1,5 +1,5 @@
 import crypto from 'node:crypto';
-import { createCookie } from 'react-router';
+import { createCookie, redirect } from 'react-router';
 import { cookieSecret } from './secret.server';
 import { MOCK_USERS } from './dummy-users.server';
 
@@ -51,4 +51,14 @@ export async function isLoggedIn(request: Request) {
   }
 
   return true;
+}
+
+export async function redirectWithClearedCookie(): Promise<Response> {
+  return redirect('/', {
+    headers: {
+      'Set-Cookie': await userDetailsCookie.serialize(null, {
+        expires: new Date(0),
+      }),
+    },
+  });
 }
