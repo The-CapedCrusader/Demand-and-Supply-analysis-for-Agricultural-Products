@@ -3,6 +3,7 @@
 import {
   IconCreditCard,
   IconDotsVertical,
+  IconLoader,
   IconLogout,
   IconNotification,
   IconUserCircle,
@@ -24,7 +25,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from '~/components/ui/sidebar';
-
+import { useFetcher } from 'react-router';
 export type NavUserProps = {
   user: {
     name: string;
@@ -96,13 +97,31 @@ export function NavUser(props: NavUserProps) {
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <IconLogout />
-              Log out
-            </DropdownMenuItem>
+
+            <LogoutButton />
           </DropdownMenuContent>
         </DropdownMenu>
       </SidebarMenuItem>
     </SidebarMenu>
+  );
+}
+
+export function LogoutButton() {
+  const fetcher = useFetcher();
+  const isLoading = fetcher.state !== 'idle';
+
+  return (
+    <fetcher.Form method="post" action="/logout" className="w-full">
+      <DropdownMenuItem
+        asChild
+        className="w-full"
+        onSelect={(e) => e.preventDefault()}
+      >
+        <button type="submit" disabled={isLoading} className="w-full">
+          <IconLogout />
+          {isLoading ? 'Logging out...' : 'Log out'}
+        </button>
+      </DropdownMenuItem>
+    </fetcher.Form>
   );
 }
