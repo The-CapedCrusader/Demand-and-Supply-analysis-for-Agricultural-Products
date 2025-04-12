@@ -2,7 +2,7 @@ import mysql from 'mysql2/promise';
 
 let cachedConnection: mysql.Pool | null = null;
 
-export async function getConnection() {
+export async function getDatabaseConnection() {
   if (cachedConnection) {
     return cachedConnection;
   }
