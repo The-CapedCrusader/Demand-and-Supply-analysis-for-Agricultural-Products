@@ -9,7 +9,8 @@
     "typecheck": "react-router typegen && tsc",
     "format:write": "prettier --write \"**/*.{ts,tsx,md}\"",
     "format:check": "prettier --check \"**/*.{ts,tsx,md}\"",
-    "db:migrate": "tsx scripts/database-migrate.ts"
+    "db:migrate": "tsx scripts/database-migrate.ts",
+    "db:seed": "tsx scripts/database-seed.ts"
   },
   "dependencies": {
     "@radix-ui/react-avatar": "^1.1.4",
