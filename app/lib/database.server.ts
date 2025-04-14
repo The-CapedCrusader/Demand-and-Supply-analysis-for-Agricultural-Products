@@ -10,7 +10,7 @@ export async function getDatabaseConnection() {
   const connection = mysql.createPool({
     host: 'localhost',
     user: 'root',
-    database: 'lab_project',
+    // database: 'lab_project',
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0,
