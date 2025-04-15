@@ -11,7 +11,7 @@ const dbInitPath = path.join(__dirname, '..', DBDIR, 'init');
 
 // 🛠️ Connect to DB
 console.log('🔌 Connecting to database...');
-const connection = await getDatabaseConnection();
+const connection = await getDatabaseConnection({ init: true });
 console.log('✅ Database connected');
 
 const listFiles = async (): Promise<string[]> => {
