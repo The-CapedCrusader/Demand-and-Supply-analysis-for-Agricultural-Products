@@ -15,7 +15,7 @@ const migrationDropSql = await fs.readFile(migrationDropPath, 'utf-8');
 
 // 🛠️ Connect to DB
 console.log('🔌 Connecting to database...');
-const connection = await getDatabaseConnection();
+const connection = await getDatabaseConnection({ init: false });
 console.log('✅ Database connected');
 
 // 🚀 Execute migration
