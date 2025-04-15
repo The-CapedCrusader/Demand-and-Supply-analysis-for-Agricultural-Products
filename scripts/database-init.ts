@@ -9,6 +9,11 @@ const __dirname = path.dirname(__filename);
 
 const dbInitPath = path.join(__dirname, '..', DBDIR, 'init');
 
+// 🛠️ Connect to DB
+console.log('🔌 Connecting to database...');
+const connection = await getDatabaseConnection();
+console.log('✅ Database connected');
+
 const listFiles = async (): Promise<string[]> => {
   try {
     return await fs.readdir(dbInitPath);
@@ -29,7 +34,6 @@ const readAllFiles = async () => {
 
         const normalizedContent = fileContent
           .replace(/--.*$/gm, '')
-          .replace(/\/\*[\s\S]*?\*\//g, '')
           .replace(/\r/g, '');
 
         return normalizedContent;
@@ -45,31 +49,24 @@ const readAllFiles = async () => {
 
 const executeSQLFiles = async () => {
   const fileContents = await readAllFiles();
-  const allSQL = fileContents.join('\n');
+  const concatanatedContent = fileContents.join('\n');
 
-  const statements = allSQL
+  const statements = concatanatedContent
     .split(';')
     .map((stmt) => stmt.trim())
     .filter((stmt) => stmt.length > 0);
 
-  // 🛠️ Connect to DB
-  console.log('🔌 Connecting to database...');
-  const connection = await getDatabaseConnection();
-  console.log('✅ Database connected');
-
   let successCount = 0;
   let failureCount = 0;
 
-  for (const [index, statement] of statements.entries()) {
+  for (const [i, statement] of statements.entries()) {
     try {
       await connection.query(statement);
-      console.log(`✅ [${index + 1}/${statements.length}] Success`);
+      console.log(`✅ [${i + 1}/${statements.length}] Success`);
       successCount++;
     } catch (error) {
-      console.error(
-        `❌ [${index + 1}/${statements.length}] Failed\n→ ${statement}\n   ↳ ${error}`
-      );
-
+      const errorMessage = `❌ [${i + 1}/${statements.length}] Failed\n→ ${statement}\n ↳ ${error}`;
+      console.error(errorMessage);
       failureCount++;
     }
   }
@@ -77,8 +74,6 @@ const executeSQLFiles = async () => {
   console.log(`\n🎉 Done executing SQL files:`);
   console.log(`   ✅ ${successCount} succeeded`);
   console.log(`   ❌ ${failureCount} failed`);
-
-  await connection.end();
 
   if (failureCount > 0) process.exit(1);
   process.exit(0);
@@ -89,4 +84,6 @@ try {
 } catch (err) {
   console.error('🚨 Unexpected error:', err);
   process.exit(1);
+} finally {
+  await connection.end();
 }

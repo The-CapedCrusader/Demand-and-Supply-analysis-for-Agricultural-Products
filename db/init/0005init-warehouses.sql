@@ -1,5 +1,7 @@
 CREATE TABLE IF NOT EXISTS WAREHOUSE (
     WarehouseID INT PRIMARY KEY AUTO_INCREMENT,
+	WarehouseName VARCHAR(100),
+	WarehouseType VARCHAR(100),
     AddressLine1 VARCHAR(200),
     AddressLine2 VARCHAR(200),
     Zip VARCHAR(10),

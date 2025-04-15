@@ -1,5 +1,6 @@
 CREATE TABLE IF NOT EXISTS PRODUCT (
     ProductID INT PRIMARY KEY AUTO_INCREMENT,
+	ProductName VARCHAR(100),
     Quantity INT,
     ShelfLifeDays INT
 );
