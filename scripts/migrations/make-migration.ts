@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const MIGRATIONS_DIR = path.join(__dirname, '..', 'db', 'migrations');
+const MIGRATIONS_DIR = path.join(__dirname, '..', '..', 'db', 'migrations');
 
 const typeMapper: Record<string, string> = {
   int: 'INT',

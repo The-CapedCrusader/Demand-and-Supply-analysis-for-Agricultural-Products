@@ -12,9 +12,9 @@
     "db:migrate": "tsx scripts/database-migrate.ts",
     "db:seed": "tsx scripts/database-seed.ts",
     "db:init": "tsx scripts/database-init.ts",
-    "db:make-migration": "tsx scripts/make-migration.ts",
-    "db:apply-migration": "tsx scripts/apply-migration.ts",
-    "db:rollback-migration": "tsx scripts/rollback-migration.ts"
+    "db:make-migration": "tsx scripts/migrations/make-migration.ts",
+    "db:apply-migration": "tsx scripts/migrations/apply-migration.ts",
+    "db:rollback-migration": "tsx scripts/migrations/rollback-migration.ts"
   },
   "dependencies": {
     "@radix-ui/react-avatar": "^1.1.4",

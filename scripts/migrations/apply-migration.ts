@@ -6,7 +6,7 @@ import { getDatabaseConnection } from '~/lib/database.server';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const MIGRATIONS_DIR = path.join(__dirname, '..', 'db', 'migrations');
+const MIGRATIONS_DIR = path.join(__dirname, '..', '..', 'db', 'migrations');
 
 // 🛠️ Connect to DB
 console.log('🔌 Connecting to database...');
