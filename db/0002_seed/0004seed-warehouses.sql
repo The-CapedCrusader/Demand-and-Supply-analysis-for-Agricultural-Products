@@ -49,9 +49,7 @@ INSERT IGNORE INTO WAREHOUSE (WarehouseName, WarehouseType, AddressLine1, Addres
 ('Birch Lane Cold Storage', 'Cold Storage', '4732 Birch Lane', 'Cold Storage 48', '06129', 7000, TRUE),
 ('Fir Avenue Warehouse', 'Storage', '3285 Fir Avenue', 'Warehouse 49', '08741', 6000, FALSE),
 ('Pine Boulevard Warehouse', 'Storage', '7561 Pine Boulevard', 'Warehouse 50', '16125', 7500, TRUE);
-
-
-
+--SQLEND
 INSERT IGNORE INTO WAREHOUSE_PRODUCT_TYPE (ProductType) VALUES
 ('Grains'),
 ('Vegetables'),
@@ -63,7 +61,7 @@ INSERT IGNORE INTO WAREHOUSE_PRODUCT_TYPE (ProductType) VALUES
 ('Nuts'),
 ('Seeds'),
 ('Beverages');
-
+--SQLEND
 INSERT IGNORE INTO WAREHOUSE_PRODUCT (WarehouseID, ProductTypeID) VALUES
 (1, 1),
 (1, 2),
@@ -118,3 +116,4 @@ INSERT IGNORE INTO WAREHOUSE_PRODUCT (WarehouseID, ProductTypeID) VALUES
 (48, 6),
 (49, 7),
 (50, 8);
+--SQLEND

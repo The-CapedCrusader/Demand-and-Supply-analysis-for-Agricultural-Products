@@ -101,7 +101,7 @@ VALUES
 	('80758', 'Maryberg'),
 	('90338', 'Hunterport'),
 	('86569', 'Lauramouth');
-
+--SQLEND
 INSERT IGNORE INTO
 	LAND_USAGE (Year, Type, Area, Quantity, Source)
 VALUES
@@ -403,7 +403,7 @@ VALUES
 		'Lawson, Allen and Hooper'
 	),
 	(2024, 'Fallow', 7917.53, 85574, 'Thomas-Bowen');
-
+--SQLEND
 INSERT IGNORE INTO
 	NUTRITION_DATA (Year, Type, Quantity, Price)
 VALUES
@@ -507,7 +507,7 @@ VALUES
 	(2022, 'Maize', 32125, 37.24),
 	(2023, 'Barley', 75192, 56.37),
 	(2024, 'Maize', 32561, 38.79);
-
+--SQLEND
 INSERT IGNORE INTO
 	GDP (Year, Population, GDP, Source)
 VALUES
@@ -896,3 +896,4 @@ VALUES
 		8096757477717.04,
 		'Erickson, Haynes and Barron'
 	);
+--SQLEND

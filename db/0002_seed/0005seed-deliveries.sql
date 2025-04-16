@@ -1,5 +1,5 @@
 INSERT IGNORE INTO DELIVERY 
-(DeliveryID, Date, TransportMode, Status, Type, BatchID, WarehouseID, LicenseID, CustomerID) VALUES
+(DeliveryID, DeliveryDate, TransportMode, Status, Type, BatchID, WarehouseID, LicenseID, CustomerID) VALUES
 (1, '2023-08-17', 'Air', 'Delivered', 'Retail', 8, 16, 38, 55),
 (2, '2025-01-20', 'Ship', 'In Transit', 'Wholesale', 17, 1, 41, 35),
 (3, '2025-01-20', 'Truck', 'Delivered', 'Wholesale', 15, 8, 28, 33),
@@ -100,3 +100,4 @@ INSERT IGNORE INTO DELIVERY
 (98, '2024-07-28', 'Truck', 'Cancelled', 'Retail', 19, 37, 26, 63),
 (99, '2023-09-19', 'Air', 'In Transit', 'Wholesale', 16, 17, 10, 41),
 (100, '2024-10-12', 'Ship', 'Delivered', 'Retail', 8, 21, 19, 34);
+--SQLEND

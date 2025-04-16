@@ -99,7 +99,7 @@ INSERT IGNORE INTO PRODUCT (ProductID, ProductName, Quantity, ShelfLifeDays) VAL
 (98, 'Asparagus', 3050, 55),
 (99, 'Leek', 2990, 70),
 (100, 'Rice', 6025, 159);
-
+--SQLEND
 INSERT IGNORE INTO PRODUCT_VARIETY (ProductID, Variety) VALUES
 (1, 'Desi Spinach'),
 (2, 'Alphonso'),
@@ -201,7 +201,7 @@ INSERT IGNORE INTO PRODUCT_VARIETY (ProductID, Variety) VALUES
 (98, 'Honeydew Musk'),
 (99, 'Olives Kalamata'),
 (100, 'Jamaican Avocado');
-
+--SQLEND
 INSERT IGNORE INTO PRODUCT_CATEGORY (ProductID, Category) VALUES
 (1, 'Leafy Greens'),
 (2, 'Tropical Fruits'),
@@ -303,7 +303,7 @@ INSERT IGNORE INTO PRODUCT_CATEGORY (ProductID, Category) VALUES
 (98, 'Vegetables'),
 (99, 'Fruits'),
 (100, 'Fruits');
-
+--SQLEND
 INSERT IGNORE INTO FARM_PRODUCT (FarmerID, ProductID, Quantity, ProductionDate) VALUES
 (2, 1, 1000, '2025-03-15'),
 (3, 2, 1500, '2025-03-12'),
@@ -328,7 +328,7 @@ INSERT IGNORE INTO FARM_PRODUCT (FarmerID, ProductID, Quantity, ProductionDate) 
 (85, 21, 1300, '2025-03-15'),
 (86, 22, 1400, '2025-03-12'),
 (95, 23, 800, '2025-03-14');
-
+--SQLEND
 INSERT IGNORE INTO FARM_PRODUCT_BATCH (Quantity, BatchDate, FarmerID, ProductID) VALUES
 (200, '2025-03-15', 2, 1),
 (250, '2025-03-12', 3, 2),
@@ -353,3 +353,4 @@ INSERT IGNORE INTO FARM_PRODUCT_BATCH (Quantity, BatchDate, FarmerID, ProductID)
 (300, '2025-03-15', 85, 21),
 (200, '2025-03-12', 86, 22),
 (150, '2025-03-14', 95, 23);
+--SQLEND

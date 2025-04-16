@@ -6,84 +6,82 @@ import { getDatabaseConnection } from '~/lib/database.server';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const dbBasePath = path.join(__dirname, '..', DBDIR);
 
-const dbInitPath = path.join(__dirname, '..', DBDIR, 'init');
+const ORDERED_FOLDERS = [
+  '0001_init',
+  '0002_seed',
+  '0003_procedures',
+  '0004_views',
+];
 
-// 🛠️ Connect to DB
-console.log('🔌 Connecting to database...');
 const connection = await getDatabaseConnection({ init: true });
-console.log('✅ Database connected');
 
-const listFiles = async (): Promise<string[]> => {
-  try {
-    return await fs.readdir(dbInitPath);
-  } catch (err) {
-    return [];
-  }
-};
+console.log('🔌 Connected to database');
 
-const readAllFiles = async () => {
-  try {
-    const files = await listFiles();
+// Get all .sql files from ordered folders, in correct execution order
+const getSQLFilePaths = async (): Promise<{ file: string; path: string }[]> => {
+  const all: { file: string; path: string }[] = [];
 
-    const fileContents = await Promise.all(
-      files.map(async (file) => {
-        const filePath = path.join(dbInitPath, file);
-
-        const fileContent = await fs.readFile(filePath, 'utf-8');
-
-        const normalizedContent = fileContent
-          .replace(/--.*$/gm, '')
-          .replace(/\r/g, '');
-
-        return normalizedContent;
-      })
-    );
-
-    return fileContents;
-  } catch (error) {
-    console.error('Error reading files:', error);
-    return [];
-  }
-};
-
-const executeSQLFiles = async () => {
-  const fileContents = await readAllFiles();
-  const concatanatedContent = fileContents.join('\n');
-
-  const statements = concatanatedContent
-    .split(';')
-    .map((stmt) => stmt.trim())
-    .filter((stmt) => stmt.length > 0);
-
-  let successCount = 0;
-  let failureCount = 0;
-
-  for (const [i, statement] of statements.entries()) {
+  for (const folder of ORDERED_FOLDERS) {
+    const dir = path.join(dbBasePath, folder);
     try {
-      await connection.query(statement);
-      console.log(`✅ [${i + 1}/${statements.length}] Success`);
-      successCount++;
-    } catch (error) {
-      const errorMessage = `❌ [${i + 1}/${statements.length}] Failed\n→ ${statement}\n ↳ ${error}`;
-      console.error(errorMessage);
-      failureCount++;
+      const files = await fs.readdir(dir);
+      const sqlFiles = files.filter((f) => f.endsWith('.sql')).sort();
+      sqlFiles.forEach((file) => {
+        all.push({ file, path: path.join(dir, file) });
+      });
+    } catch {
+      // Folder doesn't exist — skip
+      console.warn(`⚠️ Folder ${folder} does not exist. Skipping...`);
     }
   }
 
-  console.log(`\n🎉 Done executing SQL files:`);
-  console.log(`   ✅ ${successCount} succeeded`);
-  console.log(`   ❌ ${failureCount} failed`);
-
-  if (failureCount > 0) process.exit(1);
-  process.exit(0);
+  return all;
 };
 
-try {
-  await executeSQLFiles();
-} catch (err) {
+// Read and parse SQL file with --SQLEND delimiter
+const parseSQLFile = async (filePath: string) => {
+  const raw = await fs.readFile(filePath, 'utf-8');
+  return raw
+    .replace(/\r/g, '') // Normalize line endings
+    .split(/--SQLEND/gm)
+    .map((s) => s.trim())
+    .filter(Boolean);
+};
+
+const run = async () => {
+  const files = await getSQLFilePaths();
+  let success = 0;
+  let failure = 0;
+
+  for (const { file, path: filePath } of files) {
+    const statements = await parseSQLFile(filePath);
+    console.log(`📄 ${file} → ${statements.length} statement(s)`);
+
+    for (let i = 0; i < statements.length; i++) {
+      const sql = statements[i];
+      try {
+        await connection.query(sql);
+        success++;
+      } catch (err) {
+        failure++;
+        console.error(
+          `❌ [${file}] Statement ${i + 1} failed:\n→ ${sql}\n↳ ${err}`
+        );
+      }
+    }
+  }
+
+  console.log(`\n✅ Executed ${success + failure} statements`);
+  console.log(`   ✅ ${success} succeeded`);
+  console.log(`   ❌ ${failure} failed`);
+
+  await connection.end();
+  process.exit(failure > 0 ? 1 : 0);
+};
+
+run().catch((err) => {
   console.error('🚨 Unexpected error:', err);
   process.exit(1);
-} finally {
-  await connection.end();
-}
+});

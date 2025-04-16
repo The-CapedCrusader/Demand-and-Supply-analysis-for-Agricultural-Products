@@ -1,4 +1,3 @@
--- Insert users
 INSERT IGNORE INTO USERS (Name, Email, PASSWORD, Phone, AddressLine1, AddressLine2, Zip, UserType)
 VALUES 
     ('Robert Taylor', 'user1@example.com', 'hashed_password1', '01718892528', '298 Adrian Wall', NULL, '48109', 'admin'),
@@ -101,8 +100,7 @@ VALUES
     ('Mark Williamson', 'user98@example.com', 'hashed_password98', '01715991677', '6146 Johnson Isle', 'Apt. 606', '80758', 'wholesaler'),
     ('Paula Moore', 'user99@example.com', 'hashed_password99', '01716923549', '41560 Perez Viaduct Apt. 458', 'Apt. 273', '90338', 'customer'),
     ('Lisa Jones', 'user100@example.com', 'hashed_password100', '01718626962', '040 Lauren Estate Suite 263', 'Apt. 083', '86569', 'retailer');
-
--- Insert farmers
+--SQLEND
 INSERT IGNORE INTO FARMER (UserID, Gender)
 VALUES 
     (2, 'female'),
@@ -128,15 +126,13 @@ VALUES
     (85, 'female'),
     (86, 'male'),
     (95, 'female');
-
--- Insert customers
+--SQLEND
 INSERT IGNORE INTO CUSTOMER (UserID)
 VALUES 
     (5), (7), (8), (16), (18), (27), (30), (33), (34), (35),
     (42), (47), (56), (58), (59), (66), (69), (76), (78), (82),
     (84), (89), (92), (93), (99);
-
--- Insert vendors
+--SQLEND
 INSERT IGNORE INTO VENDOR (LicenseID, UserID, RegistrationDate, VendorType)
 VALUES 
     (1, 11, '2024-03-19', 'wholesaler'),
@@ -190,8 +186,7 @@ VALUES
     (49, 96, '2023-12-23', 'retailer'),
     (50, 97, '2023-05-17', 'retailer'),
     (51, 100, '2024-07-02', 'retailer');
-
--- Insert wholesalers
+--SQLEND
 INSERT IGNORE INTO WHOLESALER (WLicenseID, MinOrderQuantity)
 VALUES 
     (1, 87), (2, 23), (3, 87), (4, 20), (5, 50),
@@ -199,8 +194,7 @@ VALUES
     (11, 13), (12, 76), (13, 15), (14, 34), (15, 57),
     (16, 20), (17, 36), (18, 77), (19, 54), (20, 34),
     (21, 35), (22, 42), (23, 96), (24, 48);
-
--- Insert retailers
+--SQLEND
 INSERT IGNORE INTO RETAILER (RLicenseID, StoreType)
 VALUES 
     (25, 'seed shop'), (26, 'tools'), (27, 'seed shop'), (28, 'seed shop'), (29, 'seed shop'),
@@ -209,3 +203,4 @@ VALUES
     (40, 'tools'), (41, 'seed shop'), (42, 'grocery'), (43, 'seed shop'), (44, 'seed shop'),
     (45, 'seed shop'), (46, 'seed shop'), (47, 'grocery'), (48, 'grocery'), (49, 'grocery'),
     (50, 'grocery'), (51, 'grocery');
+--SQLEND
