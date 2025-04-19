@@ -1,0 +1,4 @@
+CREATE DATABASE IF NOT EXISTS krishok;
+--SQLEND
+USE krishok;
+--SQLEND
