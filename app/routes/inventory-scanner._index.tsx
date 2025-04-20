@@ -17,7 +17,6 @@ import { Input } from '~/components/ui/input';
 import { Progress } from '~/components/ui/progress';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs';
 import {
-  IconCamera,
   IconQrcode,
   IconBarcode,
   IconListDetails,
@@ -31,6 +30,7 @@ import {
   IconTruckDelivery,
   IconPackage,
 } from '@tabler/icons-react';
+import { useState } from 'react';
 
 // Sample inventory data
 const inventoryItems = [
@@ -45,6 +45,7 @@ const inventoryItems = [
     qualityStatus: 'Excellent',
     lastChecked: '2024-04-10',
     barcode: '10056782',
+    qrcode: 'qr-10056782',
     expiryDate: '2024-10-15',
     price: '$420/ton',
     imageUrl: '/inventory/rice.jpg',
@@ -61,6 +62,7 @@ const inventoryItems = [
     qualityStatus: 'Good',
     lastChecked: '2024-04-05',
     barcode: '10056783',
+    qrcode: 'qr-10056783',
     expiryDate: '2025-01-20',
     price: '$340/ton',
     imageUrl: '/inventory/wheat.jpg',
@@ -77,6 +79,7 @@ const inventoryItems = [
     qualityStatus: 'Warning',
     lastChecked: '2024-04-12',
     barcode: '10056784',
+    qrcode: 'qr-10056784',
     expiryDate: '2024-08-05',
     price: '$260/ton',
     imageUrl: '/inventory/corn.jpg',
@@ -93,6 +96,7 @@ const inventoryItems = [
     qualityStatus: 'Good',
     lastChecked: '2024-04-14',
     barcode: '10056785',
+    qrcode: 'qr-10056785',
     expiryDate: '2024-04-26',
     price: '$850/ton',
     imageUrl: '/inventory/tomatoes.jpg',
@@ -110,6 +114,7 @@ const inventoryItems = [
     qualityStatus: 'Excellent',
     lastChecked: '2024-04-03',
     barcode: '10056786',
+    qrcode: 'qr-10056786',
     expiryDate: '2024-12-25',
     price: '$470/ton',
     imageUrl: '/inventory/soybeans.jpg',
@@ -168,7 +173,42 @@ const scanHistory = [
   },
 ];
 
+// Define type for inventory item
+type InventoryItem = typeof inventoryItems[0];
+
 export default function InventoryScannerPage() {
+  const [qrCodeInput, setQrCodeInput] = useState('');
+  const [scannedItem, setScannedItem] = useState<InventoryItem | null>(null);
+  const [isScanning, setIsScanning] = useState(false);
+  
+  // Function to handle QR code scanning
+  const handleQrCodeScan = () => {
+    // In a real app, this would activate the camera for QR scanning
+    // For demo purposes, we'll simulate scanning after a delay
+    setIsScanning(true);
+    
+    setTimeout(() => {
+      // Simulate finding a QR code - in this case the rice item
+      const mockScannedQrCode = 'qr-10056782';
+      setQrCodeInput(mockScannedQrCode);
+      handleQrCodeSearch(mockScannedQrCode);
+      setIsScanning(false);
+    }, 2000);
+  };
+  
+  // Function to handle QR code input search
+  const handleQrCodeSearch = (code?: string) => {
+    const qrToSearch = code || qrCodeInput;
+    const foundItem = inventoryItems.find(item => item.qrcode === qrToSearch);
+    setScannedItem(foundItem || null);
+  };
+  
+  // Function to clear the scanned item
+  const handleClearScan = () => {
+    setScannedItem(null);
+    setQrCodeInput('');
+  };
+
   return (
     <SidebarProvider
       style={
@@ -203,28 +243,104 @@ export default function InventoryScannerPage() {
                     <CardHeader className="pb-2">
                       <CardTitle>Scan Inventory Item</CardTitle>
                       <CardDescription>
-                        Use your device camera or enter barcode manually
+                        Scan a QR code or enter QR code manually
                       </CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-4">
                       <div className="flex w-full items-center space-x-2">
                         <Input
                           type="text"
-                          placeholder="Enter barcode manually"
+                          placeholder="Enter QR code manually"
+                          value={qrCodeInput}
+                          onChange={(e) => setQrCodeInput(e.target.value)}
                         />
-                        <Button type="submit" className="flex-shrink-0">
+                        <Button 
+                          type="submit" 
+                          className="flex-shrink-0"
+                          onClick={() => handleQrCodeSearch()}
+                        >
                           <IconSearch className="mr-2 h-4 w-4" />
                           Search
                         </Button>
                       </div>
 
-                      <div className="flex flex-col items-center justify-center rounded-lg border-2 border-dashed p-10">
-                        <IconBarcode className="text-muted-foreground mb-4 h-10 w-10" />
-                        <p className="text-muted-foreground mb-4 text-center">
-                          Point your camera at a barcode to scan
-                        </p>
-                        <Button>Open Camera Scanner</Button>
-                      </div>
+                      {!scannedItem && (
+                        <div className="flex flex-col items-center justify-center rounded-lg border-2 border-dashed p-10">
+                          <IconQrcode className="text-muted-foreground mb-4 h-10 w-10" />
+                          <p className="text-muted-foreground mb-4 text-center">
+                            {isScanning ? 'Scanning for QR code...' : 'Scan a QR code to view inventory details'}
+                          </p>
+                          <Button onClick={handleQrCodeScan} disabled={isScanning}>
+                            {isScanning ? 'Scanning...' : 'Scan QR Code'}
+                          </Button>
+                        </div>
+                      )}
+
+                      {scannedItem && (
+                        <div className="mt-6 space-y-4">
+                          <div className="flex items-center justify-between">
+                            <h3 className="text-lg font-medium">{scannedItem.name}</h3>
+                            <Badge className={`border-0 ${
+                              scannedItem.qualityStatus === 'Excellent' 
+                                ? 'bg-green-100 text-green-800' 
+                                : scannedItem.qualityStatus === 'Good'
+                                ? 'bg-blue-100 text-blue-800'
+                                : 'bg-amber-100 text-amber-800'
+                            }`}>
+                              {scannedItem.qualityStatus}
+                            </Badge>
+                          </div>
+                          
+                          <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
+                            <div>
+                              <p className="text-muted-foreground text-sm">ID</p>
+                              <p className="font-medium">{scannedItem.id}</p>
+                            </div>
+                            <div>
+                              <p className="text-muted-foreground text-sm">Category</p>
+                              <p className="font-medium">{scannedItem.category}</p>
+                            </div>
+                            <div>
+                              <p className="text-muted-foreground text-sm">Quantity</p>
+                              <p className="font-medium">{scannedItem.quantity}</p>
+                            </div>
+                            <div>
+                              <p className="text-muted-foreground text-sm">Location</p>
+                              <p className="font-medium">{scannedItem.location}</p>
+                            </div>
+                            <div>
+                              <p className="text-muted-foreground text-sm">Last Checked</p>
+                              <p className="font-medium">{scannedItem.lastChecked}</p>
+                            </div>
+                            <div>
+                              <p className="text-muted-foreground text-sm">Expiry Date</p>
+                              <p className="font-medium">{scannedItem.expiryDate}</p>
+                            </div>
+                          </div>
+                          
+                          <div>
+                            <p className="text-muted-foreground text-sm mb-1">Storage Period</p>
+                            <div className="flex items-center gap-2">
+                              <Progress value={(scannedItem.storageDays / scannedItem.maxStorageDays) * 100} className="h-2" />
+                              <span className="text-sm whitespace-nowrap">{scannedItem.storageDays} / {scannedItem.maxStorageDays} days</span>
+                            </div>
+                          </div>
+                          
+                          <div>
+                            <p className="text-muted-foreground text-sm">Notes</p>
+                            <p>{scannedItem.notes}</p>
+                          </div>
+                          
+                          <div className="flex justify-end space-x-2 pt-4">
+                            <Button variant="outline" onClick={handleClearScan}>
+                              Clear
+                            </Button>
+                            <Button>
+                              Update Item
+                            </Button>
+                          </div>
+                        </div>
+                      )}
                     </CardContent>
                   </Card>
                 </TabsContent>
