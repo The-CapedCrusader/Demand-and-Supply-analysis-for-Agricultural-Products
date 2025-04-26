@@ -274,7 +274,7 @@ export default function MarketAnalysisPage() {
                           <div className="rounded-lg border p-3">
                             <h4 className="text-sm font-medium">Average Price</h4>
                             <p className="text-2xl font-bold">
-                              ${Math.round(priceData.reduce((acc, item) => acc + item[selectedCrop as keyof typeof item], 0) / priceData.length)}
+                              ${Math.round(priceData.reduce((acc, item) => acc + Number(item[selectedCrop as keyof typeof item]), 0) / priceData.length)}
                             </p>
                             <p className="text-muted-foreground text-xs">per ton</p>
                           </div>
