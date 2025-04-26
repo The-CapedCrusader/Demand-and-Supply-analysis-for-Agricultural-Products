@@ -54,157 +54,240 @@ export default function BuyersAndSellersPage() {
 
                 <TabsContent value="buyers" className="mt-0">
                   <div className="space-y-4">
-                    <div className="flex items-center gap-2">
-                      <Input
-                        placeholder="Search buyers..."
-                        className="max-w-sm"
-                      />
-                      <Button variant="outline">
-                        <IconSearch className="mr-2 h-4 w-4" />
-                        Search
+                  <div className="flex items-center gap-2">
+                    <Input
+                    placeholder="Search buyers..."
+                    className="max-w-sm"
+                    />
+                    <Button variant="outline">
+                    <IconSearch className="mr-2 h-4 w-4" />
+                    Search
+                    </Button>
+                  </div>
+
+                  <Card>
+                    <CardHeader className="pb-2">
+                    <CardTitle>Active Buyers</CardTitle>
+                    <CardDescription>
+                      Companies and individuals interested in your products
+                    </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                    <div className="space-y-4">
+                      <div className="bg-muted/20 rounded-lg p-4">
+                      <div className="mb-2 flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                        <h3 className="font-medium">
+                          Green Valley Organics
+                        </h3>
+                        <Badge className="border-0 bg-green-100 text-green-800">
+                          Verified
+                        </Badge>
+                        </div>
+                        <div className="flex text-amber-500">
+                        <IconStar className="h-4 w-4" />
+                        <IconStar className="h-4 w-4" />
+                        <IconStar className="h-4 w-4" />
+                        <IconStar className="h-4 w-4" />
+                        <IconStar
+                          className="h-4 w-4"
+                          fill="currentColor"
+                        />
+                        </div>
+                      </div>
+                      <div className="mb-2 grid grid-cols-1 gap-4 md:grid-cols-3">
+                        <div>
+                        <p className="text-muted-foreground text-sm">
+                          Interested In
+                        </p>
+                        <p className="font-medium">
+                          Organic Rice, Wheat
+                        </p>
+                        </div>
+                        <div>
+                        <p className="text-muted-foreground text-sm">
+                          Last Purchase
+                        </p>
+                        <p className="font-medium">April 10, 2024</p>
+                        </div>
+                        <div>
+                        <p className="text-muted-foreground text-sm">
+                          Location
+                        </p>
+                        <p className="font-medium">Portland, OR</p>
+                        </div>
+                      </div>
+                      <div className="flex justify-end gap-2">
+                        <Button
+                        variant="outline"
+                        size="sm"
+                        className="gap-1"
+                        >
+                        <IconPhone className="h-4 w-4" />
+                        Call
+                        </Button>
+                        <Button
+                        variant="outline"
+                        size="sm"
+                        className="gap-1"
+                        >
+                        <IconMessage className="h-4 w-4" />
+                        Message
+                        </Button>
+                        <Button variant="default" size="sm">
+                        View Details
+                        </Button>
+                      </div>
+                      </div>
+
+                      <div className="bg-muted/20 rounded-lg p-4">
+                      <div className="mb-2 flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                        <h3 className="font-medium">
+                          Midwest Grain Processing
+                        </h3>
+                        <Badge className="border-0 bg-green-100 text-green-800">
+                          Verified
+                        </Badge>
+                        </div>
+                        <div className="flex text-amber-500">
+                        <IconStar className="h-4 w-4" />
+                        <IconStar className="h-4 w-4" />
+                        <IconStar className="h-4 w-4" />
+                        <IconStar className="h-4 w-4" />
+                        <IconStar className="h-4 w-4" />
+                        </div>
+                      </div>
+                      <div className="mb-2 grid grid-cols-1 gap-4 md:grid-cols-3">
+                        <div>
+                        <p className="text-muted-foreground text-sm">
+                          Interested In
+                        </p>
+                        <p className="font-medium">
+                          Corn, Soybeans, Wheat
+                        </p>
+                        </div>
+                        <div>
+                        <p className="text-muted-foreground text-sm">
+                          Last Purchase
+                        </p>
+                        <p className="font-medium">March 25, 2024</p>
+                        </div>
+                        <div>
+                        <p className="text-muted-foreground text-sm">
+                          Location
+                        </p>
+                        <p className="font-medium">Des Moines, IA</p>
+                        </div>
+                      </div>
+                      <div className="flex justify-end gap-2">
+                        <Button
+                        variant="outline"
+                        size="sm"
+                        className="gap-1"
+                        >
+                        <IconPhone className="h-4 w-4" />
+                        Call
+                        </Button>
+                        <Button
+                        variant="outline"
+                        size="sm"
+                        className="gap-1"
+                        >
+                        <IconMessage className="h-4 w-4" />
+                        Message
+                        </Button>
+                        <Button variant="default" size="sm">
+                        View Details
+                        </Button>
+                      </div>
+                      </div>
+                    </div>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="mt-6">
+                    <CardHeader className="pb-2">
+                    <CardTitle>Manage Buyers</CardTitle>
+                    <CardDescription>
+                      Add, view, update, or remove buyer relationships
+                    </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                    <div className="flex justify-end mb-4">
+                      <Button size="sm" className="gap-1">
+                      Add New Buyer
                       </Button>
                     </div>
-
-                    <Card>
-                      <CardHeader className="pb-2">
-                        <CardTitle>Active Buyers</CardTitle>
-                        <CardDescription>
-                          Companies and individuals interested in your products
-                        </CardDescription>
-                      </CardHeader>
-                      <CardContent>
-                        <div className="space-y-4">
-                          <div className="bg-muted/20 rounded-lg p-4">
-                            <div className="mb-2 flex items-center justify-between">
-                              <div className="flex items-center gap-2">
-                                <h3 className="font-medium">
-                                  Green Valley Organics
-                                </h3>
-                                <Badge className="border-0 bg-green-100 text-green-800">
-                                  Verified
-                                </Badge>
-                              </div>
-                              <div className="flex text-amber-500">
-                                <IconStar className="h-4 w-4" />
-                                <IconStar className="h-4 w-4" />
-                                <IconStar className="h-4 w-4" />
-                                <IconStar className="h-4 w-4" />
-                                <IconStar
-                                  className="h-4 w-4"
-                                  fill="currentColor"
-                                />
-                              </div>
-                            </div>
-                            <div className="mb-2 grid grid-cols-1 gap-4 md:grid-cols-3">
-                              <div>
-                                <p className="text-muted-foreground text-sm">
-                                  Interested In
-                                </p>
-                                <p className="font-medium">
-                                  Organic Rice, Wheat
-                                </p>
-                              </div>
-                              <div>
-                                <p className="text-muted-foreground text-sm">
-                                  Last Purchase
-                                </p>
-                                <p className="font-medium">April 10, 2024</p>
-                              </div>
-                              <div>
-                                <p className="text-muted-foreground text-sm">
-                                  Location
-                                </p>
-                                <p className="font-medium">Portland, OR</p>
-                              </div>
-                            </div>
-                            <div className="flex justify-end gap-2">
-                              <Button
-                                variant="outline"
-                                size="sm"
-                                className="gap-1"
-                              >
-                                <IconPhone className="h-4 w-4" />
-                                Call
-                              </Button>
-                              <Button
-                                variant="outline"
-                                size="sm"
-                                className="gap-1"
-                              >
-                                <IconMessage className="h-4 w-4" />
-                                Message
-                              </Button>
-                              <Button variant="default" size="sm">
-                                View Details
-                              </Button>
-                            </div>
+                    <div className="rounded-md border">
+                      <table className="w-full text-sm">
+                      <thead>
+                        <tr className="border-b bg-muted/50">
+                        <th className="py-3 px-4 text-left font-medium">Buyer Name</th>
+                        <th className="py-3 px-4 text-left font-medium">Interested In</th>
+                        <th className="py-3 px-4 text-left font-medium">Location</th>
+                        <th className="py-3 px-4 text-left font-medium">Status</th>
+                        <th className="py-3 px-4 text-right font-medium">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr className="border-b">
+                        <td className="py-3 px-4">Green Valley Organics</td>
+                        <td className="py-3 px-4">Organic Rice, Wheat</td>
+                        <td className="py-3 px-4">Portland, OR</td>
+                        <td className="py-3 px-4">
+                          <Badge className="border-0 bg-green-100 text-green-800">Active</Badge>
+                        </td>
+                        <td className="py-3 px-4">
+                          <div className="flex justify-end gap-2">
+                          <Button variant="outline" size="sm">View</Button>
+                          <Button variant="outline" size="sm">Edit</Button>
+                          <Button variant="destructive" size="sm">Delete</Button>
                           </div>
-
-                          <div className="bg-muted/20 rounded-lg p-4">
-                            <div className="mb-2 flex items-center justify-between">
-                              <div className="flex items-center gap-2">
-                                <h3 className="font-medium">
-                                  Midwest Grain Processing
-                                </h3>
-                                <Badge className="border-0 bg-green-100 text-green-800">
-                                  Verified
-                                </Badge>
-                              </div>
-                              <div className="flex text-amber-500">
-                                <IconStar className="h-4 w-4" />
-                                <IconStar className="h-4 w-4" />
-                                <IconStar className="h-4 w-4" />
-                                <IconStar className="h-4 w-4" />
-                                <IconStar className="h-4 w-4" />
-                              </div>
-                            </div>
-                            <div className="mb-2 grid grid-cols-1 gap-4 md:grid-cols-3">
-                              <div>
-                                <p className="text-muted-foreground text-sm">
-                                  Interested In
-                                </p>
-                                <p className="font-medium">
-                                  Corn, Soybeans, Wheat
-                                </p>
-                              </div>
-                              <div>
-                                <p className="text-muted-foreground text-sm">
-                                  Last Purchase
-                                </p>
-                                <p className="font-medium">March 25, 2024</p>
-                              </div>
-                              <div>
-                                <p className="text-muted-foreground text-sm">
-                                  Location
-                                </p>
-                                <p className="font-medium">Des Moines, IA</p>
-                              </div>
-                            </div>
-                            <div className="flex justify-end gap-2">
-                              <Button
-                                variant="outline"
-                                size="sm"
-                                className="gap-1"
-                              >
-                                <IconPhone className="h-4 w-4" />
-                                Call
-                              </Button>
-                              <Button
-                                variant="outline"
-                                size="sm"
-                                className="gap-1"
-                              >
-                                <IconMessage className="h-4 w-4" />
-                                Message
-                              </Button>
-                              <Button variant="default" size="sm">
-                                View Details
-                              </Button>
-                            </div>
+                        </td>
+                        </tr>
+                        <tr className="border-b">
+                        <td className="py-3 px-4">Midwest Grain Processing</td>
+                        <td className="py-3 px-4">Corn, Soybeans, Wheat</td>
+                        <td className="py-3 px-4">Des Moines, IA</td>
+                        <td className="py-3 px-4">
+                          <Badge className="border-0 bg-green-100 text-green-800">Active</Badge>
+                        </td>
+                        <td className="py-3 px-4">
+                          <div className="flex justify-end gap-2">
+                          <Button variant="outline" size="sm">View</Button>
+                          <Button variant="outline" size="sm">Edit</Button>
+                          <Button variant="destructive" size="sm">Delete</Button>
                           </div>
-                        </div>
-                      </CardContent>
-                    </Card>
+                        </td>
+                        </tr>
+                        <tr>
+                        <td className="py-3 px-4">Farm Fresh Foods</td>
+                        <td className="py-3 px-4">Fruits, Vegetables</td>
+                        <td className="py-3 px-4">Chicago, IL</td>
+                        <td className="py-3 px-4">
+                          <Badge className="border-0 bg-yellow-100 text-yellow-800">Pending</Badge>
+                        </td>
+                        <td className="py-3 px-4">
+                          <div className="flex justify-end gap-2">
+                          <Button variant="outline" size="sm">View</Button>
+                          <Button variant="outline" size="sm">Edit</Button>
+                          <Button variant="destructive" size="sm">Delete</Button>
+                          </div>
+                        </td>
+                        </tr>
+                      </tbody>
+                      </table>
+                    </div>
+                    </CardContent>
+                    <CardFooter className="flex justify-between">
+                    <Button variant="outline" size="sm">Previous</Button>
+                    <div className="text-sm text-muted-foreground">
+                      Page 1 of 2
+                    </div>
+                    <Button variant="outline" size="sm">Next</Button>
+                    </CardFooter>
+                  </Card>
                   </div>
                 </TabsContent>
 
