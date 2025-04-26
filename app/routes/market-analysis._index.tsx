@@ -24,7 +24,16 @@ export default function MarketAnalysisPage() {
         } as React.CSSProperties
       }
     >
-      <AppSidebar variant="inset" />
+      <AppSidebar
+        variant="inset"
+        user={{
+          id: 1,
+          role: 'farmer',
+          name: 'John Doe',
+          email: 'john.doe@example.com',
+          avatar: '/avatars/farmer.jpg',
+        }}
+      />
       <SidebarInset>
         <SiteHeader />
         <div className="flex flex-1 flex-col">
@@ -69,21 +78,15 @@ export default function MarketAnalysisPage() {
                             <div className="mt-2 space-y-2">
                               <div className="flex items-center justify-between">
                                 <span className="text-sm">Rice</span>
-                                <Badge className="">
-                                  +5.2%
-                                </Badge>
+                                <Badge className="">+5.2%</Badge>
                               </div>
                               <div className="flex items-center justify-between">
                                 <span className="text-sm">Wheat</span>
-                                <Badge className="">
-                                  +3.8%
-                                </Badge>
+                                <Badge className="">+3.8%</Badge>
                               </div>
                               <div className="flex items-center justify-between">
                                 <span className="text-sm">Soybeans</span>
-                                <Badge className="">
-                                  +2.1%
-                                </Badge>
+                                <Badge className="">+2.1%</Badge>
                               </div>
                             </div>
                           </div>

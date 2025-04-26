@@ -156,7 +156,15 @@ const data = {
   ],
 };
 
-type AppSidebarProps = React.ComponentProps<typeof Sidebar>;
+type AppSidebarProps = React.ComponentProps<typeof Sidebar> & {
+  user: {
+    id: number;
+    role: string;
+    name: string;
+    email: string;
+    avatar: string;
+  };
+};
 
 export function AppSidebar(props: AppSidebarProps) {
   return (
@@ -182,7 +190,9 @@ export function AppSidebar(props: AppSidebarProps) {
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser
+          user={props.user}
+        />
       </SidebarFooter>
     </Sidebar>
   );

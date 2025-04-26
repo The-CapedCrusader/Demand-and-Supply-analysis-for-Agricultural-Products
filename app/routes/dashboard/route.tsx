@@ -1,27 +1,36 @@
-import { AppSidebar } from '~/components/navigation/app-sidebar';
-import { ChartAreaInteractive } from '~/components/chart-area-interactive';
-import { SectionCards } from '~/components/section-cards';
+import { useLoaderData, Link } from 'react-router';
 import { SiteHeader } from '~/components/site-header';
+import { SectionCards } from '~/components/section-cards';
+import { AppSidebar } from '~/components/navigation/app-sidebar';
 import { SidebarInset, SidebarProvider } from '~/components/ui/sidebar';
+import { ChartAreaInteractive } from '~/components/chart-area-interactive';
+import { Card, CardHeader, CardTitle, CardContent } from '~/components/ui/card';
+
+import { loader } from './route.loader';
+export { loader };
+
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '~/components/ui/card';
-import {
-  IconPlant2,
-  IconChartBar,
-  IconTractor,
   IconUsers,
-  IconDatabase,
+  IconPlant2,
   IconBarcode,
-  IconFileAnalytics,
+  IconTractor,
+  IconChartBar,
+  IconDatabase,
 } from '@tabler/icons-react';
-import { Link } from 'react-router';
 
 export default function DashboardPage() {
+  const { user } = useLoaderData() as {
+    user: {
+      id: number;
+      name: string;
+      role: string;
+      email: string;
+    };
+  };
+
+  console.log('user', user);
+  
+
   return (
     <SidebarProvider
       style={
@@ -31,7 +40,10 @@ export default function DashboardPage() {
         } as React.CSSProperties
       }
     >
-      <AppSidebar variant="inset" />
+      <AppSidebar
+        variant="inset"
+        user={{ ...user, avatar: '/avatars/farmer.jpg' }}
+      />
       <SidebarInset>
         <SiteHeader />
         <div className="flex flex-1 flex-col">

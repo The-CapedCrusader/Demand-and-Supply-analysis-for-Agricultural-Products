@@ -218,7 +218,16 @@ export default function InventoryScannerPage() {
         } as React.CSSProperties
       }
     >
-      <AppSidebar variant="inset" />
+      <AppSidebar
+        variant="inset"
+        user={{
+          id: 1,
+          role: 'farmer',
+          name: 'John Doe',
+          email: 'john.doe@example.com',
+          avatar: '/avatars/farmer.jpg',
+        }}
+      />
       <SidebarInset>
         <SiteHeader />
         <div className="flex flex-1 flex-col">
@@ -254,8 +263,8 @@ export default function InventoryScannerPage() {
                           value={qrCodeInput}
                           onChange={(e) => setQrCodeInput(e.target.value)}
                         />
-                        <Button 
-                          type="submit" 
+                        <Button
+                          type="submit"
                           className="flex-shrink-0"
                           onClick={() => handleQrCodeSearch()}
                         >
@@ -268,9 +277,14 @@ export default function InventoryScannerPage() {
                         <div className="flex flex-col items-center justify-center rounded-lg border-2 border-dashed p-10">
                           <IconQrcode className="text-muted-foreground mb-4 h-10 w-10" />
                           <p className="text-muted-foreground mb-4 text-center">
-                            {isScanning ? 'Scanning for QR code...' : 'Scan a QR code to view inventory details'}
+                            {isScanning
+                              ? 'Scanning for QR code...'
+                              : 'Scan a QR code to view inventory details'}
                           </p>
-                          <Button onClick={handleQrCodeScan} disabled={isScanning}>
+                          <Button
+                            onClick={handleQrCodeScan}
+                            disabled={isScanning}
+                          >
                             {isScanning ? 'Scanning...' : 'Scan QR Code'}
                           </Button>
                         </div>
@@ -279,65 +293,103 @@ export default function InventoryScannerPage() {
                       {scannedItem && (
                         <div className="mt-6 space-y-4">
                           <div className="flex items-center justify-between">
-                            <h3 className="text-lg font-medium">{scannedItem.name}</h3>
-                            <Badge className={`border-0 ${
-                              scannedItem.qualityStatus === 'Excellent' 
-                                ? 'bg-green-100 text-green-800' 
-                                : scannedItem.qualityStatus === 'Good'
-                                ? 'bg-blue-100 text-blue-800'
-                                : 'bg-amber-100 text-amber-800'
-                            }`}>
+                            <h3 className="text-lg font-medium">
+                              {scannedItem.name}
+                            </h3>
+                            <Badge
+                              className={`border-0 ${
+                                scannedItem.qualityStatus === 'Excellent'
+                                  ? 'bg-green-100 text-green-800'
+                                  : scannedItem.qualityStatus === 'Good'
+                                    ? 'bg-blue-100 text-blue-800'
+                                    : 'bg-amber-100 text-amber-800'
+                              }`}
+                            >
                               {scannedItem.qualityStatus}
                             </Badge>
                           </div>
-                          
+
                           <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
                             <div>
-                              <p className="text-muted-foreground text-sm">ID</p>
+                              <p className="text-muted-foreground text-sm">
+                                ID
+                              </p>
                               <p className="font-medium">{scannedItem.id}</p>
                             </div>
                             <div>
-                              <p className="text-muted-foreground text-sm">Category</p>
-                              <p className="font-medium">{scannedItem.category}</p>
+                              <p className="text-muted-foreground text-sm">
+                                Category
+                              </p>
+                              <p className="font-medium">
+                                {scannedItem.category}
+                              </p>
                             </div>
                             <div>
-                              <p className="text-muted-foreground text-sm">Quantity</p>
-                              <p className="font-medium">{scannedItem.quantity}</p>
+                              <p className="text-muted-foreground text-sm">
+                                Quantity
+                              </p>
+                              <p className="font-medium">
+                                {scannedItem.quantity}
+                              </p>
                             </div>
                             <div>
-                              <p className="text-muted-foreground text-sm">Location</p>
-                              <p className="font-medium">{scannedItem.location}</p>
+                              <p className="text-muted-foreground text-sm">
+                                Location
+                              </p>
+                              <p className="font-medium">
+                                {scannedItem.location}
+                              </p>
                             </div>
                             <div>
-                              <p className="text-muted-foreground text-sm">Last Checked</p>
-                              <p className="font-medium">{scannedItem.lastChecked}</p>
+                              <p className="text-muted-foreground text-sm">
+                                Last Checked
+                              </p>
+                              <p className="font-medium">
+                                {scannedItem.lastChecked}
+                              </p>
                             </div>
                             <div>
-                              <p className="text-muted-foreground text-sm">Expiry Date</p>
-                              <p className="font-medium">{scannedItem.expiryDate}</p>
+                              <p className="text-muted-foreground text-sm">
+                                Expiry Date
+                              </p>
+                              <p className="font-medium">
+                                {scannedItem.expiryDate}
+                              </p>
                             </div>
                           </div>
-                          
+
                           <div>
-                            <p className="text-muted-foreground text-sm mb-1">Storage Period</p>
+                            <p className="text-muted-foreground mb-1 text-sm">
+                              Storage Period
+                            </p>
                             <div className="flex items-center gap-2">
-                              <Progress value={(scannedItem.storageDays / scannedItem.maxStorageDays) * 100} className="h-2" />
-                              <span className="text-sm whitespace-nowrap">{scannedItem.storageDays} / {scannedItem.maxStorageDays} days</span>
+                              <Progress
+                                value={
+                                  (scannedItem.storageDays /
+                                    scannedItem.maxStorageDays) *
+                                  100
+                                }
+                                className="h-2"
+                              />
+                              <span className="text-sm whitespace-nowrap">
+                                {scannedItem.storageDays} /{' '}
+                                {scannedItem.maxStorageDays} days
+                              </span>
                             </div>
                           </div>
-                          
+
                           <div>
-                            <p className="text-muted-foreground text-sm">Notes</p>
+                            <p className="text-muted-foreground text-sm">
+                              Notes
+                            </p>
                             <p>{scannedItem.notes}</p>
                           </div>
-                          
+
                           <div className="flex justify-end space-x-2 pt-4">
                             <Button variant="outline" onClick={handleClearScan}>
                               Clear
                             </Button>
-                            <Button>
-                              Update Item
-                            </Button>
+                            <Button>Update Item</Button>
                           </div>
                         </div>
                       )}

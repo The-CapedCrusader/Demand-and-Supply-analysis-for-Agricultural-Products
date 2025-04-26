@@ -36,7 +36,16 @@ export default function MarketReportsPage() {
         } as React.CSSProperties
       }
     >
-      <AppSidebar variant="inset" />
+      <AppSidebar
+        variant="inset"
+        user={{
+          id: 1,
+          role: 'farmer',
+          name: 'John Doe',
+          email: 'john.doe@example.com',
+          avatar: '/avatars/farmer.jpg',
+        }}
+      />
       <SidebarInset>
         <SiteHeader />
         <div className="flex flex-1 flex-col">
