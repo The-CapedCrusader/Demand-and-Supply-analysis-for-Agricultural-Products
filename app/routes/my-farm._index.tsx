@@ -170,6 +170,56 @@ export default function MyFarmPage() {
                               </div>
                               <span className="font-medium">92%</span>
                             </div>
+                            <div className="flex items-center justify-between">
+                              <span>Potatoes</span>
+                              <div className="h-2 w-2/3 overflow-hidden rounded-full bg-gray-200">
+                                <div
+                                  className="h-full rounded-full bg-green-500"
+                                  style={{ width: '88%' }}
+                                ></div>
+                              </div>
+                              <span className="font-medium">88%</span>
+                            </div>
+                            <div className="flex items-center justify-between">
+                              <span>Soybeans</span>
+                              <div className="h-2 w-2/3 overflow-hidden rounded-full bg-gray-200">
+                                <div
+                                  className="h-full rounded-full bg-amber-500"
+                                  style={{ width: '65%' }}
+                                ></div>
+                              </div>
+                              <span className="font-medium">65%</span>
+                            </div>
+                            <div className="flex items-center justify-between">
+                              <span>Cotton</span>
+                              <div className="h-2 w-2/3 overflow-hidden rounded-full bg-gray-200">
+                                <div
+                                  className="h-full rounded-full bg-green-500"
+                                  style={{ width: '81%' }}
+                                ></div>
+                              </div>
+                              <span className="font-medium">81%</span>
+                            </div>
+                            <div className="flex items-center justify-between">
+                              <span>Sugarcane</span>
+                              <div className="h-2 w-2/3 overflow-hidden rounded-full bg-gray-200">
+                                <div
+                                  className="h-full rounded-full bg-red-500"
+                                  style={{ width: '45%' }}
+                                ></div>
+                              </div>
+                              <span className="font-medium text-red-600">45% (Critical)</span>
+                            </div>
+                            <div className="flex items-center justify-between">
+                              <span>Barley</span>
+                              <div className="h-2 w-2/3 overflow-hidden rounded-full bg-gray-200">
+                                <div
+                                  className="h-full rounded-full bg-amber-500"
+                                  style={{ width: '70%' }}
+                                ></div>
+                              </div>
+                              <span className="font-medium">70%</span>
+                            </div>
                           </div>
                         </CardContent>
                       </Card>

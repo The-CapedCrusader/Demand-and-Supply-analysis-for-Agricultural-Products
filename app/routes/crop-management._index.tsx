@@ -57,120 +57,209 @@ export default function CropManagementPage() {
                 </TabsList>
 
                 <TabsContent value="active" className="mt-0">
+                  <Card className="mb-4">
+                  <CardHeader className="pb-2">
+                    <CardTitle>Active Crops Management</CardTitle>
+                    <CardDescription>
+                    View and manage all your active crops
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="flex justify-end mb-4">
+                    <Button size="sm" className="gap-1">
+                      Add New Crop
+                    </Button>
+                    </div>
+                    <div className="rounded-md border">
+                    <table className="w-full">
+                      <thead>
+                      <tr className="border-b bg-muted/50">
+                        <th className="p-2 text-left font-medium">Crop</th>
+                        <th className="p-2 text-left font-medium">Field</th>
+                        <th className="p-2 text-left font-medium">Planted Date</th>
+                        <th className="p-2 text-left font-medium">Harvest Date</th>
+                        <th className="p-2 text-left font-medium">Progress</th>
+                        <th className="p-2 text-left font-medium">Actions</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr className="border-b">
+                        <td className="p-2">Rice (Jasmine)</td>
+                        <td className="p-2">Field A1</td>
+                        <td className="p-2">March 15, 2024</td>
+                        <td className="p-2">July 20, 2024</td>
+                        <td className="p-2">
+                        <div className="flex items-center gap-2">
+                          <Progress value={65} className="h-2 w-24" />
+                          <span className="text-xs">65%</span>
+                        </div>
+                        </td>
+                        <td className="p-2">
+                        <div className="flex gap-1">
+                          <Button variant="outline" size="sm">View</Button>
+                          <Button variant="outline" size="sm">Edit</Button>
+                          <Button variant="destructive" size="sm">Delete</Button>
+                        </div>
+                        </td>
+                      </tr>
+                      <tr className="border-b">
+                        <td className="p-2">Wheat (Hard Red)</td>
+                        <td className="p-2">Field B2</td>
+                        <td className="p-2">April 2, 2024</td>
+                        <td className="p-2">August 10, 2024</td>
+                        <td className="p-2">
+                        <div className="flex items-center gap-2">
+                          <Progress value={45} className="h-2 w-24" />
+                          <span className="text-xs">45%</span>
+                        </div>
+                        </td>
+                        <td className="p-2">
+                        <div className="flex gap-1">
+                          <Button variant="outline" size="sm">View</Button>
+                          <Button variant="outline" size="sm">Edit</Button>
+                          <Button variant="destructive" size="sm">Delete</Button>
+                        </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="p-2">Corn (Sweet)</td>
+                        <td className="p-2">Field C3</td>
+                        <td className="p-2">May 5, 2024</td>
+                        <td className="p-2">September 15, 2024</td>
+                        <td className="p-2">
+                        <div className="flex items-center gap-2">
+                          <Progress value={20} className="h-2 w-24" />
+                          <span className="text-xs">20%</span>
+                        </div>
+                        </td>
+                        <td className="p-2">
+                        <div className="flex gap-1">
+                          <Button variant="outline" size="sm">View</Button>
+                          <Button variant="outline" size="sm">Edit</Button>
+                          <Button variant="destructive" size="sm">Delete</Button>
+                        </div>
+                        </td>
+                      </tr>
+                      </tbody>
+                    </table>
+                    </div>
+                  </CardContent>
+                  </Card>
+
                   <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                    <Card>
-                      <CardHeader className="pb-2">
-                        <CardTitle className="flex items-center gap-2 text-lg">
-                          <IconPlant2 className="text-primary h-5 w-5" />
-                          Rice (Jasmine)
-                        </CardTitle>
-                        <CardDescription>
-                          Field A1 - Planted: March 15, 2024
-                        </CardDescription>
-                      </CardHeader>
-                      <CardContent>
-                        <div className="space-y-4">
-                          <div>
-                            <div className="mb-1 flex justify-between text-sm">
-                              <span>Growth Progress</span>
-                              <span className="font-medium">65%</span>
-                            </div>
-                            <Progress value={65} className="h-2" />
-                          </div>
+                  <Card>
+                    <CardHeader className="pb-2">
+                    <CardTitle className="flex items-center gap-2 text-lg">
+                      <IconPlant2 className="text-primary h-5 w-5" />
+                      Rice (Jasmine)
+                    </CardTitle>
+                    <CardDescription>
+                      Field A1 - Planted: March 15, 2024
+                    </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                    <div className="space-y-4">
+                      <div>
+                      <div className="mb-1 flex justify-between text-sm">
+                        <span>Growth Progress</span>
+                        <span className="font-medium">65%</span>
+                      </div>
+                      <Progress value={65} className="h-2" />
+                      </div>
 
-                          <div className="grid grid-cols-2 gap-4">
-                            <div>
-                              <p className="text-muted-foreground text-sm">
-                                Est. Harvest
-                              </p>
-                              <p className="font-medium">July 20, 2024</p>
-                            </div>
-                            <div>
-                              <p className="text-muted-foreground text-sm">
-                                Est. Yield
-                              </p>
-                              <p className="font-medium">4.8 tons/acre</p>
-                            </div>
-                          </div>
+                      <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <p className="text-muted-foreground text-sm">
+                        Est. Harvest
+                        </p>
+                        <p className="font-medium">July 20, 2024</p>
+                      </div>
+                      <div>
+                        <p className="text-muted-foreground text-sm">
+                        Est. Yield
+                        </p>
+                        <p className="font-medium">4.8 tons/acre</p>
+                      </div>
+                      </div>
 
-                          <div>
-                            <p className="mb-2 text-sm font-medium">
-                              Recent Activities
-                            </p>
-                            <ul className="text-muted-foreground space-y-1 text-sm">
-                              <li>Fertilizer application (Apr 20)</li>
-                              <li>Pest control treatment (May 5)</li>
-                              <li>Irrigation maintenance (May 15)</li>
-                            </ul>
-                          </div>
-                        </div>
-                      </CardContent>
-                      <CardFooter className="border-t pt-4">
-                        <Button variant="outline" size="sm">
-                          View Details
-                        </Button>
-                        <Button className="ml-auto" size="sm">
-                          Record Activity
-                        </Button>
-                      </CardFooter>
-                    </Card>
+                      <div>
+                      <p className="mb-2 text-sm font-medium">
+                        Recent Activities
+                      </p>
+                      <ul className="text-muted-foreground space-y-1 text-sm">
+                        <li>Fertilizer application (Apr 20)</li>
+                        <li>Pest control treatment (May 5)</li>
+                        <li>Irrigation maintenance (May 15)</li>
+                      </ul>
+                      </div>
+                    </div>
+                    </CardContent>
+                    <CardFooter className="border-t pt-4">
+                    <Button variant="outline" size="sm">
+                      View Details
+                    </Button>
+                    <Button className="ml-auto" size="sm">
+                      Record Activity
+                    </Button>
+                    </CardFooter>
+                  </Card>
 
-                    <Card>
-                      <CardHeader className="pb-2">
-                        <CardTitle className="flex items-center gap-2 text-lg">
-                          <IconPlant2 className="text-primary h-5 w-5" />
-                          Wheat (Hard Red)
-                        </CardTitle>
-                        <CardDescription>
-                          Field B2 - Planted: April 2, 2024
-                        </CardDescription>
-                      </CardHeader>
-                      <CardContent>
-                        <div className="space-y-4">
-                          <div>
-                            <div className="mb-1 flex justify-between text-sm">
-                              <span>Growth Progress</span>
-                              <span className="font-medium">45%</span>
-                            </div>
-                            <Progress value={45} className="h-2" />
-                          </div>
+                  <Card>
+                    <CardHeader className="pb-2">
+                    <CardTitle className="flex items-center gap-2 text-lg">
+                      <IconPlant2 className="text-primary h-5 w-5" />
+                      Wheat (Hard Red)
+                    </CardTitle>
+                    <CardDescription>
+                      Field B2 - Planted: April 2, 2024
+                    </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                    <div className="space-y-4">
+                      <div>
+                      <div className="mb-1 flex justify-between text-sm">
+                        <span>Growth Progress</span>
+                        <span className="font-medium">45%</span>
+                      </div>
+                      <Progress value={45} className="h-2" />
+                      </div>
 
-                          <div className="grid grid-cols-2 gap-4">
-                            <div>
-                              <p className="text-muted-foreground text-sm">
-                                Est. Harvest
-                              </p>
-                              <p className="font-medium">August 10, 2024</p>
-                            </div>
-                            <div>
-                              <p className="text-muted-foreground text-sm">
-                                Est. Yield
-                              </p>
-                              <p className="font-medium">3.2 tons/acre</p>
-                            </div>
-                          </div>
+                      <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <p className="text-muted-foreground text-sm">
+                        Est. Harvest
+                        </p>
+                        <p className="font-medium">August 10, 2024</p>
+                      </div>
+                      <div>
+                        <p className="text-muted-foreground text-sm">
+                        Est. Yield
+                        </p>
+                        <p className="font-medium">3.2 tons/acre</p>
+                      </div>
+                      </div>
 
-                          <div>
-                            <p className="mb-2 text-sm font-medium">
-                              Upcoming Tasks
-                            </p>
-                            <ul className="text-muted-foreground space-y-1 text-sm">
-                              <li>Fertilizer application (May 28)</li>
-                              <li>Weed control (June 10)</li>
-                              <li>Field inspection (June 15)</li>
-                            </ul>
-                          </div>
-                        </div>
-                      </CardContent>
-                      <CardFooter className="border-t pt-4">
-                        <Button variant="outline" size="sm">
-                          View Details
-                        </Button>
-                        <Button className="ml-auto" size="sm">
-                          Record Activity
-                        </Button>
-                      </CardFooter>
-                    </Card>
+                      <div>
+                      <p className="mb-2 text-sm font-medium">
+                        Upcoming Tasks
+                      </p>
+                      <ul className="text-muted-foreground space-y-1 text-sm">
+                        <li>Fertilizer application (May 28)</li>
+                        <li>Weed control (June 10)</li>
+                        <li>Field inspection (June 15)</li>
+                      </ul>
+                      </div>
+                    </div>
+                    </CardContent>
+                    <CardFooter className="border-t pt-4">
+                    <Button variant="outline" size="sm">
+                      View Details
+                    </Button>
+                    <Button className="ml-auto" size="sm">
+                      Record Activity
+                    </Button>
+                    </CardFooter>
+                  </Card>
                   </div>
                 </TabsContent>
 
