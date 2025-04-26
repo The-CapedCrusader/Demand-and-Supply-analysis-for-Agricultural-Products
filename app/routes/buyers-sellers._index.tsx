@@ -249,143 +249,226 @@ export default function BuyersAndSellersPage() {
                             </div>
                             <div className="mb-2 grid grid-cols-1 gap-4 md:grid-cols-3">
                               <div>
-                                <p className="text-muted-foreground text-sm">
-                                  Products
-                                </p>
-                                <p className="font-medium">
-                                  Seeds, Fertilizers, Tools
-                                </p>
+                              <p className="text-muted-foreground text-sm">
+                                Products
+                              </p>
+                              <p className="font-medium">
+                                Seeds, Fertilizers, Tools
+                              </p>
                               </div>
                               <div>
-                                <p className="text-muted-foreground text-sm">
-                                  Last Order
-                                </p>
-                                <p className="font-medium">April 5, 2024</p>
+                              <p className="text-muted-foreground text-sm">
+                                Last Order
+                              </p>
+                              <p className="font-medium">April 5, 2024</p>
                               </div>
                               <div>
-                                <p className="text-muted-foreground text-sm">
-                                  Location
-                                </p>
-                                <p className="font-medium">Lincoln, NE</p>
+                              <p className="text-muted-foreground text-sm">
+                                Location
+                              </p>
+                              <p className="font-medium">Lincoln, NE</p>
                               </div>
                             </div>
                             <div className="flex justify-end gap-2">
                               <Button
-                                variant="outline"
-                                size="sm"
-                                className="gap-1"
+                              variant="outline"
+                              size="sm"
+                              className="gap-1"
                               >
-                                <IconPhone className="h-4 w-4" />
-                                Call
+                              <IconPhone className="h-4 w-4" />
+                              Call
                               </Button>
                               <Button
-                                variant="outline"
-                                size="sm"
-                                className="gap-1"
+                              variant="outline"
+                              size="sm"
+                              className="gap-1"
                               >
-                                <IconMessage className="h-4 w-4" />
-                                Message
+                              <IconMessage className="h-4 w-4" />
+                              Message
                               </Button>
                               <Button variant="default" size="sm">
-                                Shop Now
+                              Shop Now
                               </Button>
                             </div>
-                          </div>
+                            </div>
 
-                          <div className="bg-muted/20 rounded-lg p-4">
+                            <div className="bg-muted/20 rounded-lg p-4">
                             <div className="mb-2 flex items-center justify-between">
                               <div className="flex items-center gap-2">
-                                <h3 className="font-medium">
-                                  Farm Equipment Inc.
-                                </h3>
-                                <Badge className="border-0 bg-green-100 text-green-800">
-                                  Verified
-                                </Badge>
+                              <h3 className="font-medium">
+                                Farm Equipment Inc.
+                              </h3>
+                              <Badge className="border-0 bg-green-100 text-green-800">
+                                Verified
+                              </Badge>
                               </div>
                               <div className="flex text-amber-500">
-                                <IconStar className="h-4 w-4" />
-                                <IconStar className="h-4 w-4" />
-                                <IconStar className="h-4 w-4" />
-                                <IconStar className="h-4 w-4" />
-                                <IconStar
-                                  className="h-4 w-4"
-                                  fill="currentColor"
-                                />
+                              <IconStar className="h-4 w-4" />
+                              <IconStar className="h-4 w-4" />
+                              <IconStar className="h-4 w-4" />
+                              <IconStar className="h-4 w-4" />
+                              <IconStar
+                                className="h-4 w-4"
+                                fill="currentColor"
+                              />
                               </div>
                             </div>
                             <div className="mb-2 grid grid-cols-1 gap-4 md:grid-cols-3">
                               <div>
-                                <p className="text-muted-foreground text-sm">
-                                  Products
-                                </p>
-                                <p className="font-medium">
-                                  Tractors, Irrigation Systems
-                                </p>
+                              <p className="text-muted-foreground text-sm">
+                                Products
+                              </p>
+                              <p className="font-medium">
+                                Tractors, Irrigation Systems
+                              </p>
                               </div>
                               <div>
-                                <p className="text-muted-foreground text-sm">
-                                  Last Order
-                                </p>
-                                <p className="font-medium">February 18, 2024</p>
+                              <p className="text-muted-foreground text-sm">
+                                Last Order
+                              </p>
+                              <p className="font-medium">February 18, 2024</p>
                               </div>
                               <div>
-                                <p className="text-muted-foreground text-sm">
-                                  Location
-                                </p>
-                                <p className="font-medium">Kansas City, MO</p>
+                              <p className="text-muted-foreground text-sm">
+                                Location
+                              </p>
+                              <p className="font-medium">Kansas City, MO</p>
                               </div>
                             </div>
                             <div className="flex justify-end gap-2">
                               <Button
-                                variant="outline"
-                                size="sm"
-                                className="gap-1"
+                              variant="outline"
+                              size="sm"
+                              className="gap-1"
                               >
-                                <IconPhone className="h-4 w-4" />
-                                Call
+                              <IconPhone className="h-4 w-4" />
+                              Call
                               </Button>
                               <Button
-                                variant="outline"
-                                size="sm"
-                                className="gap-1"
+                              variant="outline"
+                              size="sm"
+                              className="gap-1"
                               >
-                                <IconMessage className="h-4 w-4" />
-                                Message
+                              <IconMessage className="h-4 w-4" />
+                              Message
                               </Button>
                               <Button variant="default" size="sm">
-                                Shop Now
+                              Shop Now
                               </Button>
                             </div>
+                            </div>
                           </div>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </div>
-                </TabsContent>
+                          </CardContent>
+                        </Card>
 
-                <TabsContent value="marketplace" className="mt-0">
-                  <Card>
-                    <CardHeader className="pb-2">
-                      <CardTitle>Agriculture Marketplace</CardTitle>
-                      <CardDescription>
-                        Connect with new buyers and sellers in your area
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="bg-muted/20 rounded-lg p-8 text-center">
-                        <p className="text-muted-foreground mb-4">
-                          Marketplace data would be displayed here
-                        </p>
-                        <Button>Browse Marketplace</Button>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </TabsContent>
-              </Tabs>
-            </div>
-          </div>
-        </div>
-      </SidebarInset>
-    </SidebarProvider>
-  );
-}
+                        <Card className="mt-6">
+                          <CardHeader className="pb-2">
+                          <CardTitle>Manage Suppliers</CardTitle>
+                          <CardDescription>
+                            Add, view, update, or remove supplier relationships
+                          </CardDescription>
+                          </CardHeader>
+                          <CardContent>
+                          <div className="flex justify-end mb-4">
+                            <Button size="sm" className="gap-1">
+                            Add New Supplier
+                            </Button>
+                          </div>
+                          <div className="rounded-md border">
+                            <table className="w-full text-sm">
+                            <thead>
+                              <tr className="border-b bg-muted/50">
+                              <th className="py-3 px-4 text-left font-medium">Supplier Name</th>
+                              <th className="py-3 px-4 text-left font-medium">Products</th>
+                              <th className="py-3 px-4 text-left font-medium">Location</th>
+                              <th className="py-3 px-4 text-left font-medium">Status</th>
+                              <th className="py-3 px-4 text-right font-medium">Actions</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr className="border-b">
+                              <td className="py-3 px-4">AgriSupply Co.</td>
+                              <td className="py-3 px-4">Seeds, Fertilizers, Tools</td>
+                              <td className="py-3 px-4">Lincoln, NE</td>
+                              <td className="py-3 px-4">
+                                <Badge className="border-0 bg-green-100 text-green-800">Active</Badge>
+                              </td>
+                              <td className="py-3 px-4">
+                                <div className="flex justify-end gap-2">
+                                <Button variant="outline" size="sm">View</Button>
+                                <Button variant="outline" size="sm">Edit</Button>
+                                <Button variant="destructive" size="sm">Delete</Button>
+                                </div>
+                              </td>
+                              </tr>
+                              <tr className="border-b">
+                              <td className="py-3 px-4">Farm Equipment Inc.</td>
+                              <td className="py-3 px-4">Tractors, Irrigation Systems</td>
+                              <td className="py-3 px-4">Kansas City, MO</td>
+                              <td className="py-3 px-4">
+                                <Badge className="border-0 bg-green-100 text-green-800">Active</Badge>
+                              </td>
+                              <td className="py-3 px-4">
+                                <div className="flex justify-end gap-2">
+                                <Button variant="outline" size="sm">View</Button>
+                                <Button variant="outline" size="sm">Edit</Button>
+                                <Button variant="destructive" size="sm">Delete</Button>
+                                </div>
+                              </td>
+                              </tr>
+                              <tr>
+                              <td className="py-3 px-4">Organic Seed Supply</td>
+                              <td className="py-3 px-4">Organic Seeds, Fertilizers</td>
+                              <td className="py-3 px-4">Portland, OR</td>
+                              <td className="py-3 px-4">
+                                <Badge className="border-0 bg-yellow-100 text-yellow-800">Pending</Badge>
+                              </td>
+                              <td className="py-3 px-4">
+                                <div className="flex justify-end gap-2">
+                                <Button variant="outline" size="sm">View</Button>
+                                <Button variant="outline" size="sm">Edit</Button>
+                                <Button variant="destructive" size="sm">Delete</Button>
+                                </div>
+                              </td>
+                              </tr>
+                            </tbody>
+                            </table>
+                          </div>
+                          </CardContent>
+                          <CardFooter className="flex justify-between">
+                          <Button variant="outline" size="sm">Previous</Button>
+                          <div className="text-sm text-muted-foreground">
+                            Page 1 of 3
+                          </div>
+                          <Button variant="outline" size="sm">Next</Button>
+                          </CardFooter>
+                        </Card>
+                        </div>
+                      </TabsContent>
+
+                      <TabsContent value="marketplace" className="mt-0">
+                        <Card>
+                        <CardHeader className="pb-2">
+                          <CardTitle>Agriculture Marketplace</CardTitle>
+                          <CardDescription>
+                          Connect with new buyers and sellers in your area
+                          </CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                          <div className="bg-muted/20 rounded-lg p-8 text-center">
+                          <p className="text-muted-foreground mb-4">
+                            Marketplace data would be displayed here
+                          </p>
+                          <Button>Browse Marketplace</Button>
+                          </div>
+                        </CardContent>
+                        </Card>
+                      </TabsContent>
+                      </Tabs>
+                    </div>
+                    </div>
+                  </div>
+                  </SidebarInset>
+                </SidebarProvider>
+                );
+              }
