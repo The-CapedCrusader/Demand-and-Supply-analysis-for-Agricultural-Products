@@ -1,4 +1,4 @@
-'use client';
+<TabsContent value="overview" className="mt-0"></TabsContent>
 
 import { AppSidebar } from '~/components/navigation/app-sidebar';
 import { SiteHeader } from '~/components/site-header';
@@ -560,6 +560,59 @@ export default function MarketAnalysisPage() {
                   </Card>
                 </TabsContent>
               </Tabs>
+              
+              {/* CRUD operations table added at the end */}
+              <div className="px-4 lg:px-6 mb-6">
+                <Card>
+                  <CardHeader className="pb-2">
+                    <CardTitle>Market Data Management</CardTitle>
+                    <CardDescription>
+                      Create, view, update, and delete market data records
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="overflow-x-auto">
+                      <table className="w-full border-collapse">
+                        <thead>
+                          <tr className="border-b">
+                            <th className="py-3 text-left font-medium">Product</th>
+                            <th className="py-3 text-left font-medium">Region</th>
+                            <th className="py-3 text-left font-medium">Current Price</th>
+                            <th className="py-3 text-left font-medium">Demand</th>
+                            <th className="py-3 text-left font-medium">Supply</th>
+                            <th className="py-3 text-left font-medium">Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {['Rice', 'Wheat', 'Corn', 'Soybeans'].map((product, i) => (
+                            <tr key={i} className="border-b hover:bg-muted/50">
+                              <td className="py-3">{product}</td>
+                              <td className="py-3">National</td>
+                              <td className="py-3">${400 + (i * 30)}</td>
+                              <td className="py-3">{12000 - (i * 1000)}</td>
+                              <td className="py-3">{11500 - (i * 900)}</td>
+                              <td className="py-3 space-x-2">
+                                <Button size="sm" variant="outline">View</Button>
+                                <Button size="sm" variant="outline">Edit</Button>
+                                <Button size="sm" variant="outline" className="text-red-500 hover:text-red-700">Delete</Button>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                    <div className="mt-4 flex justify-between">
+                      <Button className="bg-green-600 hover:bg-green-700 text-white">
+                        Add New Record
+                      </Button>
+                      <div className="space-x-2">
+                        <Button variant="outline">Export Data</Button>
+                        <Button variant="outline">Import Data</Button>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
             </div>
           </div>
         </div>
