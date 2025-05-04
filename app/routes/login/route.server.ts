@@ -5,8 +5,7 @@ import {
   verifyPassword,
   userDetailsCookie,
 } from '~/lib/password.server';
-import type { DBUser } from '~/types/user';
-import { getDatabaseConnection } from '~/lib/database.server';
+import { MOCK_USERS } from '~/lib/dummy-users.server';
 
 export async function action(args: Route.ActionArgs) {
   const { request } = args;
@@ -24,19 +23,12 @@ export async function action(args: Route.ActionArgs) {
     return { error: 'Password is required' };
   }
 
-  const conn = await getDatabaseConnection({ init: false });
-  const [existingUserRows] = await conn.query(
-    `SELECT * FROM USER_T WHERE email = ?`,
-    [email]
-  );
-
-  const user = existingUserRows as Array<DBUser>;
-
-  if (user.length === 0) {
-    return { error: 'Email or password invalid' };
+  const user = MOCK_USERS.find((user) => user.email === email);
+  if (!user) {
+    return { error: 'Invalid email or password' };
   }
 
-  const userPassword = user[0].PASSWORD as string;
+  const userPassword = await hashPassword(user.password);
   const isPasswordValid = await verifyPassword(password, userPassword);
 
   if (!isPasswordValid) {
@@ -46,10 +38,10 @@ export async function action(args: Route.ActionArgs) {
   const cookieHeader = request.headers.get('Cookie');
   const cookie = (await userDetailsCookie.parse(cookieHeader)) ?? {};
 
-  cookie.id = user[0].UserID;
-  cookie.name = user[0].Name;
-  cookie.email = user[0].Email;
-  cookie.role = user[0].UserType;
+  cookie.id = user.id;
+  cookie.name = user.name;
+  cookie.email = user.email;
+  cookie.role = user.role;
 
   return redirect('/dashboard', {
     headers: {
