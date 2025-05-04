@@ -5,14 +5,14 @@ CREATE OR REPLACE PROCEDURE create_nutrition_data (
     IN p_Price FLOAT
 )
 BEGIN
-    INSERT INTO NUTRITION_DATA (Year, Type, Quantity, Price)
+    INSERT INTO NUTRITION_DATA_T (Year, Type, Quantity, Price)
     VALUES (p_Year, p_Type, p_Quantity, p_Price);
 END;
 --SQLEND
 
 CREATE OR REPLACE PROCEDURE get_all_nutrition_data()
 BEGIN
-    SELECT * FROM NUTRITION_DATA;
+    SELECT * FROM NUTRITION_DATA_T;
 END;
 --SQLEND
 
@@ -20,7 +20,7 @@ CREATE OR REPLACE PROCEDURE get_nutrition_data_by_year (
     IN p_Year INT
 )
 BEGIN
-    SELECT * FROM NUTRITION_DATA WHERE Year = p_Year;
+    SELECT * FROM NUTRITION_DATA_T WHERE Year = p_Year;
 END;
 --SQLEND
 
@@ -31,7 +31,7 @@ CREATE OR REPLACE PROCEDURE update_nutrition_data (
     IN p_Price FLOAT
 )
 BEGIN
-    UPDATE NUTRITION_DATA
+    UPDATE NUTRITION_DATA_T
     SET Type = p_Type,
         Quantity = p_Quantity,
         Price = p_Price
@@ -43,6 +43,6 @@ CREATE OR REPLACE PROCEDURE delete_nutrition_data (
     IN p_Year INT
 )
 BEGIN
-    DELETE FROM NUTRITION_DATA WHERE Year = p_Year;
+    DELETE FROM NUTRITION_DATA_T WHERE Year = p_Year;
 END;
 --SQLEND

@@ -1,4 +1,4 @@
-INSERT IGNORE INTO PRODUCT (ProductID, ProductName, Quantity, ShelfLifeDays) VALUES
+INSERT IGNORE INTO PRODUCT_T (ProductID, ProductName, Quantity, ShelfLifeDays) VALUES
 (1, 'Spinach', 4768, 168),
 (2, 'Mango', 6827, 138),
 (3, 'Banana', 9484, 134),
@@ -100,7 +100,7 @@ INSERT IGNORE INTO PRODUCT (ProductID, ProductName, Quantity, ShelfLifeDays) VAL
 (99, 'Leek', 2990, 70),
 (100, 'Rice', 6025, 159);
 --SQLEND
-INSERT IGNORE INTO PRODUCT_VARIETY (ProductID, Variety) VALUES
+INSERT IGNORE INTO PRODUCT_VARIETY_T (ProductID, Variety) VALUES
 (1, 'Desi Spinach'),
 (2, 'Alphonso'),
 (3, 'Cavendish'),
@@ -202,7 +202,7 @@ INSERT IGNORE INTO PRODUCT_VARIETY (ProductID, Variety) VALUES
 (99, 'Olives Kalamata'),
 (100, 'Jamaican Avocado');
 --SQLEND
-INSERT IGNORE INTO PRODUCT_CATEGORY (ProductID, Category) VALUES
+INSERT IGNORE INTO PRODUCT_CATEGORY_T (ProductID, Category) VALUES
 (1, 'Leafy Greens'),
 (2, 'Tropical Fruits'),
 (3, 'Tropical Fruits'),
@@ -304,7 +304,7 @@ INSERT IGNORE INTO PRODUCT_CATEGORY (ProductID, Category) VALUES
 (99, 'Fruits'),
 (100, 'Fruits');
 --SQLEND
-INSERT IGNORE INTO PRODUCT_SEASONALITY (ProductID, Seasonality) VALUES
+INSERT IGNORE INTO PRODUCT_SEASONALITY_T (ProductID, Seasonality) VALUES
 (1, 'Winter'),
 (2, 'Summer'),
 (3, 'Year-Round'),
@@ -406,7 +406,7 @@ INSERT IGNORE INTO PRODUCT_SEASONALITY (ProductID, Seasonality) VALUES
 (99, 'Winter'),
 (100, 'Year-Round');
 --SQLEND
-INSERT IGNORE INTO FARM_PRODUCT (FarmerID, ProductID, Quantity, ProductionDate) VALUES
+INSERT IGNORE INTO FARM_PRODUCT_T (FarmerID, ProductID, Quantity, ProductionDate) VALUES
 (2, 1, 1000, '2025-03-15'),
 (3, 2, 1500, '2025-03-12'),
 (6, 3, 1200, '2025-03-14'),
@@ -431,7 +431,7 @@ INSERT IGNORE INTO FARM_PRODUCT (FarmerID, ProductID, Quantity, ProductionDate) 
 (86, 22, 1400, '2025-03-12'),
 (95, 23, 800, '2025-03-14');
 --SQLEND
-INSERT IGNORE INTO FARM_PRODUCT_BATCH (Quantity, BatchDate, FarmerID, ProductID) VALUES
+INSERT IGNORE INTO FARM_PRODUCT_BATCH_T (Quantity, BatchDate, FarmerID, ProductID) VALUES
 (200, '2025-03-15', 2, 1),
 (250, '2025-03-12', 3, 2),
 (300, '2025-03-14', 6, 3),

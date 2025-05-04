@@ -1,4 +1,4 @@
-INSERT IGNORE INTO USERS (Name, Email, PASSWORD, Phone, AddressLine1, AddressLine2, Zip, UserType)
+INSERT IGNORE INTO USER_T (Name, Email, PASSWORD, Phone, AddressLine1, AddressLine2, Zip, UserType)
 VALUES 
     ('Robert Taylor', 'user1@example.com', 'hashed_password1', '01718892528', '298 Adrian Wall', NULL, '48109', 'admin'),
     ('Michael Guzman', 'user2@example.com', 'hashed_password2', '01719665898', '8551 John Parks', 'Suite 430', '14619', 'farmer'),
@@ -101,7 +101,7 @@ VALUES
     ('Paula Moore', 'user99@example.com', 'hashed_password99', '01716923549', '41560 Perez Viaduct Apt. 458', 'Apt. 273', '90338', 'customer'),
     ('Lisa Jones', 'user100@example.com', 'hashed_password100', '01718626962', '040 Lauren Estate Suite 263', 'Apt. 083', '86569', 'retailer');
 --SQLEND
-INSERT IGNORE INTO FARMER (UserID, Gender)
+INSERT IGNORE INTO FARMER_T (UserID, Gender)
 VALUES 
     (2, 'female'),
     (3, 'female'),
@@ -127,13 +127,13 @@ VALUES
     (86, 'male'),
     (95, 'female');
 --SQLEND
-INSERT IGNORE INTO CUSTOMER (UserID)
+INSERT IGNORE INTO CUSTOMER_T (UserID)
 VALUES 
     (5), (7), (8), (16), (18), (27), (30), (33), (34), (35),
     (42), (47), (56), (58), (59), (66), (69), (76), (78), (82),
     (84), (89), (92), (93), (99);
 --SQLEND
-INSERT IGNORE INTO VENDOR (LicenseID, UserID, RegistrationDate, VendorType)
+INSERT IGNORE INTO VENDOR_T (LicenseID, UserID, RegistrationDate, VendorType)
 VALUES 
     (1, 11, '2024-03-19', 'wholesaler'),
     (2, 12, '2024-08-10', 'wholesaler'),
@@ -187,7 +187,7 @@ VALUES
     (50, 97, '2023-05-17', 'retailer'),
     (51, 100, '2024-07-02', 'retailer');
 --SQLEND
-INSERT IGNORE INTO WHOLESALER (WLicenseID, MinOrderQuantity)
+INSERT IGNORE INTO WHOLESALER_T (WLicenseID, MinOrderQuantity)
 VALUES 
     (1, 87), (2, 23), (3, 87), (4, 20), (5, 50),
     (6, 51), (7, 78), (8, 68), (9, 51), (10, 42),
@@ -195,7 +195,7 @@ VALUES
     (16, 20), (17, 36), (18, 77), (19, 54), (20, 34),
     (21, 35), (22, 42), (23, 96), (24, 48);
 --SQLEND
-INSERT IGNORE INTO RETAILER (RLicenseID, StoreType)
+INSERT IGNORE INTO RETAILER_T (RLicenseID, StoreType)
 VALUES 
     (25, 'seed shop'), (26, 'tools'), (27, 'seed shop'), (28, 'seed shop'), (29, 'seed shop'),
     (30, 'seed shop'), (31, 'tools'), (32, 'grocery'), (33, 'grocery'), (34, 'seed shop'),

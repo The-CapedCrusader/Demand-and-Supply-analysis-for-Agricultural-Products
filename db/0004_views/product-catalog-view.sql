@@ -5,7 +5,7 @@ SELECT
     pc.Category,
 	pv.Variety,
     p.ShelfLifeDays
-FROM PRODUCT p
-JOIN PRODUCT_CATEGORY pc ON p.ProductID = pc.ProductID
-JOIN PRODUCT_VARIETY pv ON p.ProductID = pv.ProductID
+FROM PRODUCT_T p
+JOIN PRODUCT_CATEGORY_T pc ON p.ProductID = pc.ProductID
+JOIN PRODUCT_VARIETY_T pv ON p.ProductID = pv.ProductID
 --SQLEND

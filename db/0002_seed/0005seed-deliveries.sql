@@ -1,4 +1,4 @@
-INSERT IGNORE INTO DELIVERY 
+INSERT IGNORE INTO DELIVERY_T 
 (DeliveryID, DeliveryDate, TransportMode, Status, Type, BatchID, WarehouseID, LicenseID, CustomerID) VALUES
 (1, '2023-08-17', 'Air', 'Delivered', 'Retail', 8, 16, 38, 55),
 (2, '2025-01-20', 'Ship', 'In Transit', 'Wholesale', 17, 1, 41, 35),

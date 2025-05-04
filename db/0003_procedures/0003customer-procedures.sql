@@ -2,7 +2,7 @@ CREATE OR REPLACE PROCEDURE create_customer (
     IN p_UserID INT
 )
 BEGIN
-    INSERT INTO CUSTOMER (UserID)
+    INSERT INTO CUSTOMER_T (UserID)
     VALUES (p_UserID);
 END;
 --SQLEND
@@ -10,8 +10,8 @@ END;
 CREATE OR REPLACE PROCEDURE get_all_customers()
 BEGIN
     SELECT u.*
-    FROM USERS u
-    JOIN CUSTOMER c ON u.UserID = c.UserID;
+    FROM USER_T u
+    JOIN CUSTOMER_T c ON u.UserID = c.UserID;
 END;
 --SQLEND
 
@@ -20,8 +20,8 @@ CREATE OR REPLACE PROCEDURE get_customer_by_id (
 )
 BEGIN
     SELECT u.*
-    FROM USERS u
-    JOIN CUSTOMER c ON u.UserID = c.UserID
+    FROM USER_T u
+    JOIN CUSTOMER_T c ON u.UserID = c.UserID
     WHERE u.UserID = p_UserID;
 END;
 --SQLEND
@@ -30,6 +30,6 @@ CREATE OR REPLACE PROCEDURE delete_customer (
     IN p_UserID INT
 )
 BEGIN
-    DELETE FROM CUSTOMER WHERE UserID = p_UserID;
+    DELETE FROM CUSTOMER_T WHERE UserID = p_UserID;
 END;
 --SQLEND

@@ -4,6 +4,6 @@ SELECT
     SUM(Area) AS TotalAreaUsed,
     SUM(Quantity) AS TotalQuantity,
     AVG(Quantity / Area) AS YieldPerAcre
-FROM LAND_USAGE
+FROM LAND_USAGE_T
 GROUP BY Type;
 --SQLEND

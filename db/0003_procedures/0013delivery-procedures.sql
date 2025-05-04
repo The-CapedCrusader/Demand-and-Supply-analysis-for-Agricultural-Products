@@ -9,7 +9,7 @@ CREATE OR REPLACE PROCEDURE create_delivery (
     IN p_CustomerID INT
 )
 BEGIN
-    INSERT INTO DELIVERY (
+    INSERT INTO DELIVERY_T (
         Date, TransportMode, Status, Type,
         BatchID, WarehouseID, LicenseID, CustomerID
     ) VALUES (
@@ -34,11 +34,11 @@ BEGIN
         u1.Name AS VendorName,
         d.CustomerID,
         u2.Name AS CustomerName
-    FROM DELIVERY d
-    LEFT JOIN WAREHOUSE w ON d.WarehouseID = w.WarehouseID
-    LEFT JOIN VENDOR v ON d.LicenseID = v.LicenseID
-    LEFT JOIN USERS u1 ON v.UserID = u1.UserID
-    LEFT JOIN USERS u2 ON d.CustomerID = u2.UserID;
+    FROM DELIVERY_T d
+    LEFT JOIN WAREHOUSE_T w ON d.WarehouseID = w.WarehouseID
+    LEFT JOIN VENDOR_T v ON d.LicenseID = v.LicenseID
+    LEFT JOIN USER_T u1 ON v.UserID = u1.UserID
+    LEFT JOIN USER_T u2 ON d.CustomerID = u2.UserID;
 END;
 --SQLEND
 
@@ -46,7 +46,7 @@ CREATE OR REPLACE PROCEDURE get_delivery_by_id (
     IN p_DeliveryID INT
 )
 BEGIN
-    SELECT * FROM DELIVERY
+    SELECT * FROM DELIVERY_T
     WHERE DeliveryID = p_DeliveryID;
 END;
 --SQLEND
@@ -63,7 +63,7 @@ CREATE OR REPLACE PROCEDURE update_delivery (
     IN p_CustomerID INT
 )
 BEGIN
-    UPDATE DELIVERY
+    UPDATE DELIVERY_T
     SET
         Date = p_Date,
         TransportMode = p_TransportMode,
@@ -81,6 +81,6 @@ CREATE OR REPLACE PROCEDURE delete_delivery (
     IN p_DeliveryID INT
 )
 BEGIN
-    DELETE FROM DELIVERY WHERE DeliveryID = p_DeliveryID;
+    DELETE FROM DELIVERY_T WHERE DeliveryID = p_DeliveryID;
 END;
 --SQLEND

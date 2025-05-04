@@ -7,9 +7,9 @@ CREATE OR REPLACE VIEW PRODUCTION_SUMMARY AS
 		SUM(fp.Quantity) as TotalProduced,
 		MIN(fp.ProductionDate) as FirstProductionDate,
 		MAX(fp.ProductionDate) as LastProductionDate
-	FROM FARM_PRODUCT fp
-	JOIN PRODUCT p ON fp.ProductID = p.ProductID
-	JOIN FARMER f ON fp.FarmerID = f.UserID
-	JOIN USERS u ON f.UserID = u.UserID
+	FROM FARM_PRODUCT_T fp
+	JOIN PRODUCT_T p ON fp.ProductID = p.ProductID
+	JOIN FARMER_T f ON fp.FarmerID = f.UserID
+	JOIN USER_T u ON f.UserID = u.UserID
 	GROUP BY u.USERID, u.name, fp.ProductID;
 --SQLEND

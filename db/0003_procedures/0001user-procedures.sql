@@ -9,7 +9,7 @@ CREATE OR REPLACE PROCEDURE create_user (
   IN p_UserType ENUM('farmer', 'retailer', 'wholesaler', 'customer', 'admin')
 )
 BEGIN
-  INSERT INTO USERS (Name, Email, PASSWORD, Phone, AddressLine1, AddressLine2, Zip, UserType)
+  INSERT INTO USER_T (Name, Email, PASSWORD, Phone, AddressLine1, AddressLine2, Zip, UserType)
   VALUES (p_Name, p_Email, p_Password, p_Phone, p_AddressLine1, p_AddressLine2, p_Zip, p_UserType);
 END;
 
@@ -19,7 +19,7 @@ CREATE OR REPLACE PROCEDURE get_user_by_id (
     IN p_UserID INT
 )
 BEGIN
-    SELECT * FROM USERS WHERE UserID = p_UserID;
+    SELECT * FROM USER_T WHERE UserID = p_UserID;
 END;
 
 --SQLEND
@@ -36,7 +36,7 @@ CREATE OR REPLACE PROCEDURE update_user (
   IN p_UserType ENUM('farmer', 'retailer', 'wholesaler', 'customer', 'admin')
 )
 BEGIN
-  UPDATE USERS
+  UPDATE USER_T
   SET Name = p_Name,
 	  Email = p_Email,
 	  PASSWORD = p_Password,
@@ -52,7 +52,7 @@ END;
 
 CREATE OR REPLACE PROCEDURE read_all_users ()
 BEGIN
-    SELECT * FROM USERS;
+    SELECT * FROM USER_T;
 END;
 
 --SQLEND
@@ -61,7 +61,7 @@ CREATE OR REPLACE PROCEDURE delete_user (
   IN p_UserID INT
 )
 BEGIN
-  DELETE FROM USERS WHERE UserID = p_UserID;
+  DELETE FROM USER_T WHERE UserID = p_UserID;
 END;
 
 --SQLEND

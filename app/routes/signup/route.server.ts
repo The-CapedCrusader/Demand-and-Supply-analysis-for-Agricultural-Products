@@ -30,7 +30,7 @@ export const action = async (args: Route.ActionArgs) => {
 
   const conn = await getDatabaseConnection({ init: false });
   const [existingUserRows] = await conn.query(
-    `SELECT * FROM USERS WHERE email = ?`,
+    `SELECT * FROM USER_T WHERE email = ?`,
     [email]
   );
 
@@ -45,7 +45,7 @@ export const action = async (args: Route.ActionArgs) => {
   const hashedPassword = await hashPassword(password);
 
   const [createUserRows] = await conn.query(
-    `INSERT INTO USERS (email, name, password) VALUES (?, ?, ?)`,
+    `INSERT INTO USER_T (email, name, password) VALUES (?, ?, ?)`,
     [email, name, hashedPassword]
   );
 

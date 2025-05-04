@@ -1,5 +1,5 @@
 INSERT IGNORE INTO
-	ZIP_CODE (Zip, City)
+	ZIP_CODE_T (Zip, City)
 VALUES
 	('48109', 'New Jessica'),
 	('14619', 'Floresview'),
@@ -103,7 +103,7 @@ VALUES
 	('86569', 'Lauramouth');
 --SQLEND
 INSERT IGNORE INTO
-	LAND_USAGE (Year, Type, Area, Quantity, Source)
+	LAND_USAGE_T (Year, Type, Area, Quantity, Source)
 VALUES
 	(1925, 'Fallow', 8599.39, 87123, 'Allen-Matthews'),
 	(1926, 'Fallow', 6056.01, 38437, 'Gray-Turner'),
@@ -405,7 +405,7 @@ VALUES
 	(2024, 'Fallow', 7917.53, 85574, 'Thomas-Bowen');
 --SQLEND
 INSERT IGNORE INTO
-	NUTRITION_DATA (Year, Type, Quantity, Price)
+	NUTRITION_DATA_T (Year, Type, Quantity, Price)
 VALUES
 	(1925, 'Soybean', 23919, 3.12),
 	(1926, 'Wheat', 54972, 79.9),
@@ -509,7 +509,7 @@ VALUES
 	(2024, 'Maize', 32561, 38.79);
 --SQLEND
 INSERT IGNORE INTO
-	GDP (Year, Population, GDP, Source)
+	GDP_T (Year, Population, GDP, Source)
 VALUES
 	(1925, 639185985, 1633116596474.62, 'Barker PLC'),
 	(

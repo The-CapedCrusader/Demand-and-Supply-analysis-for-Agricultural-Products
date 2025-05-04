@@ -5,6 +5,6 @@ SELECT
     u.Email,
     u.Phone,
     u.Zip
-FROM USERS u
-JOIN CUSTOMER c ON c.UserID = u.UserID;
+FROM USER_T u
+JOIN CUSTOMER_T c ON c.UserID = u.UserID;
 --SQLEND

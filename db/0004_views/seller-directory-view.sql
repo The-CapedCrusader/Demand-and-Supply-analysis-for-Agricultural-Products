@@ -6,6 +6,6 @@ SELECT
     u.Phone,
     u.Zip,
     v.VendorType
-FROM USERS u
-JOIN VENDOR v ON v.UserID = u.UserID;
+FROM USER_T u
+JOIN VENDOR_T v ON v.UserID = u.UserID;
 --SQLEND

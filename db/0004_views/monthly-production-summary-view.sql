@@ -4,7 +4,7 @@ SELECT
     YEAR(ProductionDate) AS Year,
     ProductID,
     SUM(Quantity) AS TotalProduced
-FROM FARM_PRODUCT
+FROM FARM_PRODUCT_T
 GROUP BY YEAR(ProductionDate), MONTH(ProductionDate), ProductID
 ORDER BY TotalProduced DESC;
 --SQLEND

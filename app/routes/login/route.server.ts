@@ -26,7 +26,7 @@ export async function action(args: Route.ActionArgs) {
 
   const conn = await getDatabaseConnection({ init: false });
   const [existingUserRows] = await conn.query(
-    `SELECT * FROM USERS WHERE email = ?`,
+    `SELECT * FROM USER_T WHERE email = ?`,
     [email]
   );
 
