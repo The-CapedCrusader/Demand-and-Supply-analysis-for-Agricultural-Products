@@ -33,6 +33,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '~/components/ui/sidebar';
+import { BoxesIcon, WarehouseIcon } from 'lucide-react';
 
 const data = {
   user: {
@@ -149,9 +150,14 @@ const data = {
       icon: IconFileAnalytics,
     },
     {
-      name: 'Inventory Scanner',
-      url: '/inventory-scanner',
-      icon: IconBarcode,
+      name: 'Warehouses',
+      url: '/warehouses',
+      icon: WarehouseIcon,
+    },
+    {
+      name: 'Inventory',
+      url: '/inventory',
+      icon: BoxesIcon,
     },
   ],
 };
@@ -190,9 +196,7 @@ export function AppSidebar(props: AppSidebarProps) {
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser
-          user={props.user}
-        />
+        <NavUser user={props.user} />
       </SidebarFooter>
     </Sidebar>
   );

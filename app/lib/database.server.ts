@@ -7,7 +7,11 @@ type Props = {
   init?: boolean;
 };
 
-export async function getDatabaseConnection({ init = false }: Props) {
+export async function getDatabaseConnection(
+  { init }: Props = {
+    init: false,
+  }
+) {
   if (cachedConnection) {
     return cachedConnection;
   }
