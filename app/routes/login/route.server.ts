@@ -36,7 +36,7 @@ export async function action(args: Route.ActionArgs) {
     return { error: 'Email or password invalid' };
   }
 
-  const userPassword = await hashPassword(user[0].PASSWORD as string);
+  const userPassword = user[0].PASSWORD as string;
   const isPasswordValid = await verifyPassword(password, userPassword);
 
   if (!isPasswordValid) {
