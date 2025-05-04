@@ -8,12 +8,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const dbBasePath = path.join(__dirname, '..', DBDIR);
 
-const ORDERED_FOLDERS = [
-  '0001_init',
-  '0002_seed',
-  '0003_procedures',
-  '0004_views',
-];
+const ORDERED_FOLDERS = ['0001_init', '0002_seed'];
 
 const connection = await getDatabaseConnection({ init: true });
 
