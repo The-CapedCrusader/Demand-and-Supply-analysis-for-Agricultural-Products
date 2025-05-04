@@ -42,7 +42,7 @@ export const action = async (args: Route.ActionArgs) => {
     return { error: 'Email already exists' };
   }
 
-  const hashedPassword = hashPassword(password);
+  const hashedPassword = await hashPassword(password);
 
   const [createUserRows] = await conn.query(
     `INSERT INTO USERS (email, name, password) VALUES (?, ?, ?)`,
