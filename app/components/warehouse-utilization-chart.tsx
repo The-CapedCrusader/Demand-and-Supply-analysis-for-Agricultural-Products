@@ -1,4 +1,4 @@
-import { ChartContainer } from './ui/chart';
+import { ChartContainer } from './ui/chart-new';
 import { Pie as PieChart } from 'react-chartjs-2';
 import { DashboardCard } from './dashboard-card';
 import { useEffect, useId, useState } from 'react';

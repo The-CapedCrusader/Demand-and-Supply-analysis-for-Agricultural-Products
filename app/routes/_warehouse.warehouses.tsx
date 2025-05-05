@@ -17,7 +17,7 @@ import invariant from 'tiny-invariant';
 import { useFetcher } from 'react-router';
 
 import { Pie as PieChart } from 'react-chartjs-2';
-import { ChartContainer } from '~/components/ui/chart';
+import { ChartContainer } from '~/components/ui/chart-new';
 import { WarehouseUtilizationChart } from '~/components/warehouse-utilization-chart';
 
 export type WarehouseType = {
