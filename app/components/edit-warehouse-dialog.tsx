@@ -14,8 +14,10 @@ import {
 } from '~/components/ui/dialog';
 import { Input } from '~/components/ui/input';
 import { Label } from '~/components/ui/label';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { DBWarehouseType } from '~/routes/_warehouse.warehouses';
+import { useFetcher } from 'react-router';
+import { Switch } from '~/components/ui/switch';
 
 interface EditWarehouseDialogProps {
   warehouse: DBWarehouseType;
@@ -26,25 +28,14 @@ export function EditWarehouseDialog({
   warehouse,
   children,
 }: EditWarehouseDialogProps) {
+  const fetcher = useFetcher();
   const [open, setOpen] = useState(false);
-  const [formData, setFormData] = useState({
-    name: warehouse.WarehouseName,
-    location: warehouse.AddressLine1,
-    capacity: warehouse.Capacity,
-  });
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log('Updated warehouse:', formData);
-    setOpen(false);
-  };
+  useEffect(() => {
+    if (fetcher.data?.success) {
+      setOpen(false);
+    }
+  }, [fetcher.data]);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -56,7 +47,14 @@ export function EditWarehouseDialog({
             Update the warehouse details. Click save when you're done.
           </DialogDescription>
         </DialogHeader>
-        <form onSubmit={handleSubmit}>
+        <fetcher.Form method="post">
+          <input type="hidden" name="intent" value="update" />
+          <input
+            type="hidden"
+            name="warehouseId"
+            value={warehouse.WarehouseID}
+          />
+
           <div className="grid gap-4 py-4">
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="name" className="text-right">
@@ -65,8 +63,18 @@ export function EditWarehouseDialog({
               <Input
                 id="name"
                 name="name"
-                value={formData.name}
-                onChange={handleChange}
+                defaultValue={warehouse.WarehouseName}
+                className="col-span-3"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="type" className="text-right">
+                Type
+              </Label>
+              <Input
+                id="type"
+                name="type"
+                defaultValue={warehouse.WarehouseType}
                 className="col-span-3"
               />
             </div>
@@ -77,8 +85,7 @@ export function EditWarehouseDialog({
               <Input
                 id="location"
                 name="location"
-                value={formData.location}
-                onChange={handleChange}
+                defaultValue={warehouse.Location}
                 className="col-span-3"
               />
             </div>
@@ -89,9 +96,18 @@ export function EditWarehouseDialog({
               <Input
                 id="capacity"
                 name="capacity"
-                value={formData.capacity}
-                onChange={handleChange}
+                defaultValue={warehouse.Capacity}
                 className="col-span-3"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="temperatureControlled" className="text-right">
+                Temperature Controlled
+              </Label>
+              <Switch
+                id="temperatureControlled"
+                name="temperatureControlled"
+                defaultChecked={warehouse.TemperatureControlled}
               />
             </div>
           </div>
@@ -105,7 +121,7 @@ export function EditWarehouseDialog({
             </Button>
             <Button type="submit">Save Changes</Button>
           </DialogFooter>
-        </form>
+        </fetcher.Form>
       </DialogContent>
     </Dialog>
   );

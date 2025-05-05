@@ -14,6 +14,11 @@ import { SidebarInset } from '~/components/ui/sidebar';
 import type { Route } from './+types/_warehouse.warehouses';
 import { getDatabaseConnection } from '~/lib/database.server';
 import invariant from 'tiny-invariant';
+import { useFetcher } from 'react-router';
+
+import { Pie as PieChart } from 'react-chartjs-2';
+import { ChartContainer } from '~/components/ui/chart';
+import { WarehouseUtilizationChart } from '~/components/warehouse-utilization-chart';
 
 export type WarehouseType = {
   WarehouseID: number;
@@ -21,78 +26,40 @@ export type WarehouseType = {
   WarehouseType: string;
   Location: string;
   Capacity: number;
-  TemperatureControlled: number;
+  TemperatureControlled: boolean;
   created_at: Date;
   updated_at: Date;
 };
 
 export type DBWarehouseType = Pick<
   WarehouseType,
-  'WarehouseID' | 'WarehouseName' | 'Location' | 'Capacity'
+  | 'WarehouseID'
+  | 'WarehouseName'
+  | 'Location'
+  | 'Capacity'
+  | 'WarehouseType'
+  | 'TemperatureControlled'
 > & {
   Utilization: number;
 };
 
-const warehouses = [
-  {
-    WarehouseID: 1,
-    WarehouseName: 'Central Distribution Center',
-    Location: 'Chicago, IL',
-    Capacity: 50000,
-    Utilization: 78,
-  },
-  {
-    WarehouseID: 2,
-    WarehouseName: 'East Coast Facility',
-    Location: 'Newark, NJ',
-    Capacity: 35000,
-    Utilization: 92,
-  },
-  {
-    WarehouseID: 3,
-    WarehouseName: 'West Coast Hub',
-    Location: 'Oakland, CA',
-    Capacity: 45000,
-    Utilization: 65,
-  },
-  {
-    WarehouseID: 4,
-    WarehouseName: 'Southern Distribution Center',
-    Location: 'Atlanta, GA',
-    Capacity: 40000,
-    Utilization: 81,
-  },
-];
-
-// Mock data for utilization chart
-const utilizationData = {
-  labels: ['Used', 'Available'],
-  datasets: [
-    {
-      data: [78, 22],
-      backgroundColor: ['rgb(75, 192, 75)', 'rgb(234, 236, 239)'],
-      borderWidth: 0,
-    },
-  ],
-};
-
 export async function action({ request }: Route.ActionArgs) {
-  const formData = await request.formData();
+  try {
+    const formData = await request.formData();
 
-  const intent = formData.get('intent');
-  const conn = await getDatabaseConnection();
+    const intent = formData.get('intent');
+    const conn = await getDatabaseConnection();
 
-  switch (intent) {
-    case 'create':
+    if (intent === 'create') {
       const warehouseName = formData.get('name');
       const warehouseLocation = formData.get('location');
       const warehouseCapacity = formData.get('capacity');
       const warehouseType = formData.get('type');
       const warehouseTemperatureControlled =
-        formData.get('temperatureControlled') ?? false;
+        formData.get('temperatureControlled') === 'on' ? true : false;
 
       const [result] = await conn.execute(
-        'INSERT INTO WAREHOUSE_T (WarehouseName, AddressLine1, Capacity, WarehouseType, TemperatureControlled) VALUES (?, ?, ?, ?, ?)',
+        'INSERT INTO WAREHOUSE_T (WarehouseName, Location, Capacity, WarehouseType, TemperatureControlled) VALUES (?, ?, ?, ?, ?)',
         [
           warehouseName,
           warehouseLocation,
@@ -112,17 +79,46 @@ export async function action({ request }: Route.ActionArgs) {
       }
 
       return { success: true };
-      break;
-    default:
-      break;
+    } else if (intent === 'delete') {
+      const warehouseId = formData.get('warehouseId');
+      await conn.execute('DELETE FROM WAREHOUSE_T WHERE WarehouseID = ?', [
+        warehouseId,
+      ]);
+
+      return { success: true };
+    } else if (intent === 'update') {
+      const warehouseId = formData.get('warehouseId');
+      const warehouseName = formData.get('name');
+      const warehouseLocation = formData.get('location');
+      const warehouseCapacity = formData.get('capacity');
+      const warehouseType = formData.get('type');
+      const warehouseTemperatureControlled =
+        formData.get('temperatureControlled') === 'on' ? true : false;
+
+      await conn.execute(
+        'UPDATE WAREHOUSE_T SET WarehouseName = ?, Location = ?, Capacity = ?, WarehouseType = ?, TemperatureControlled = ? WHERE WarehouseID = ?',
+        [
+          warehouseName,
+          warehouseLocation,
+          warehouseCapacity,
+          warehouseType,
+          warehouseTemperatureControlled,
+          warehouseId,
+        ]
+      );
+
+      return { success: true };
+    }
+  } catch (error) {
+    console.error(error);
+    return { success: false, error: 'Failed to create warehouse' };
   }
-  // const
 }
 
 export async function loader() {
   const conn = await getDatabaseConnection();
   const [rows] = await conn.execute(
-    `SELECT w.WarehouseID, w.WarehouseName, w.Capacity, (w.Capacity - SUM(wp.ProductCapacity)) as Utilization
+    `SELECT w.WarehouseID, w.WarehouseName, w.Capacity, w.TemperatureControlled, w.Location, w.WarehouseType, ROUND((w.Capacity - SUM(wp.ProductCapacity)) / w.Capacity * 100, 2) as Utilization
     FROM WAREHOUSE_T as w, WAREHOUSE_PRODUCT_T as wp
     WHERE wp.WarehouseID = w.WarehouseID
     GROUP BY w.WarehouseID
@@ -214,6 +210,10 @@ export default function WarehousesPage(props: Route.ComponentProps) {
               </div>
             </TabsContent>
           </Tabs>
+
+          <div className="mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <WarehouseUtilizationChart />
+          </div>
         </div>
       </SidebarInset>
     </SidebarProvider>
@@ -244,6 +244,8 @@ type WarehouseCardProps = {
 export function WarehouseCard(props: WarehouseCardProps) {
   const { warehouse } = props;
 
+  const fetcher = useFetcher();
+
   return (
     <DashboardCard>
       <div className="flex h-full flex-col">
@@ -270,11 +272,14 @@ export function WarehouseCard(props: WarehouseCardProps) {
             </Button>
           </EditWarehouseDialog>
 
-          <DeleteDialog
-            title="Delete Warehouse"
-            description={`Are you sure you want to delete ${warehouse.WarehouseName}? This action cannot be undone.`}
-            onDelete={() => {}}
-          >
+          <fetcher.Form method="post">
+            <input
+              type="hidden"
+              name="warehouseId"
+              value={warehouse.WarehouseID}
+            />
+            <input type="hidden" name="intent" value="delete" />
+
             <Button
               size="sm"
               variant="outline"
@@ -283,7 +288,7 @@ export function WarehouseCard(props: WarehouseCardProps) {
               <Trash className="mr-1 h-4 w-4" />
               Delete
             </Button>
-          </DeleteDialog>
+          </fetcher.Form>
         </div>
       </div>
     </DashboardCard>
