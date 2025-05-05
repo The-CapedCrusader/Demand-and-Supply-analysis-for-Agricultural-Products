@@ -14,21 +14,19 @@ import {
   DialogTrigger,
 } from '~/components/ui/dialog';
 
-interface DeleteWarehouseDialogProps {
+interface DeleteDialogProps {
   children: React.ReactNode;
   title: string;
   description: string;
+  onDelete: () => void;
 }
 
-export function DeleteWarehouseDialog({
-  children,
-  title,
-  description,
-}: DeleteWarehouseDialogProps) {
+export function DeleteDialog(props: DeleteDialogProps) {
+  const { children, title, description, onDelete } = props;
   const [open, setOpen] = useState(false);
 
   const handleDelete = () => {
-    console.log('Item deleted');
+    onDelete();
     setOpen(false);
   };
 

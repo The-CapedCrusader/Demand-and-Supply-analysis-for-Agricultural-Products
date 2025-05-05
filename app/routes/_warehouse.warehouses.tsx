@@ -5,14 +5,13 @@ import { Search, Plus, Edit, Trash, Package } from 'lucide-react';
 import { AddWarehouseDialog } from '~/components/add-warehouse-dialog';
 import { EditWarehouseDialog } from '~/components/edit-warehouse-dialog';
 import { ManageInventoryDialog } from '~/components/manage-inventory-dialog';
-import { DeleteWarehouseDialog } from '~/components/delete-warehouse-dialog';
+import { DeleteDialog } from '~/components/delete-dialog';
 import { DashboardCard } from '~/components/dashboard-card';
 import { cn } from '~/lib/utils';
 import { AppSidebar } from '~/components/navigation/app-sidebar';
 import { SidebarProvider } from '~/components/ui/sidebar';
 import { SiteHeader } from '~/components/site-header';
 import { SidebarInset } from '~/components/ui/sidebar';
-import { getDatabaseConnection } from '~/lib/database.server';
 import type { Route } from './+types/_warehouse.warehouses';
 
 export type WarehouseType = {
@@ -79,7 +78,7 @@ const utilizationData = {
 };
 
 export async function loader() {
-  const conn = await getDatabaseConnection();
+  // const conn = await getDatabaseConnection();
   // const [rows] = await conn.execute('SELECT * FROM WAREHOUSE_T');
 
   // const [rows] = await conn.execute(
@@ -206,7 +205,7 @@ export function WarehouseCard(props: WarehouseCardProps) {
   const { warehouse } = props;
 
   return (
-    <DashboardCard title={warehouse.WarehouseName}>
+    <DashboardCard>
       <div className="flex h-full flex-col">
         <div className="mb-2 flex items-start justify-between">
           <div>
@@ -230,13 +229,17 @@ export function WarehouseCard(props: WarehouseCardProps) {
               Edit
             </Button>
           </EditWarehouseDialog>
-          <ManageInventoryDialog warehouse={warehouse}>
+
+          <ManageInventoryDialog
+            // FIXME: warehouse types and products
+            warehouse={warehouse}
+          >
             <Button size="sm" variant="outline">
               <Package className="mr-1 h-4 w-4" />
               Inventory
             </Button>
           </ManageInventoryDialog>
-          <DeleteWarehouseDialog
+          <DeleteDialog
             title="Delete Warehouse"
             description={`Are you sure you want to delete ${warehouse.WarehouseName}? This action cannot be undone.`}
           >
@@ -248,7 +251,7 @@ export function WarehouseCard(props: WarehouseCardProps) {
               <Trash className="mr-1 h-4 w-4" />
               Delete
             </Button>
-          </DeleteWarehouseDialog>
+          </DeleteDialog>
         </div>
       </div>
     </DashboardCard>
