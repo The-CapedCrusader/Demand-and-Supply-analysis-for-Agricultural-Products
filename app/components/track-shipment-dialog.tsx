@@ -117,46 +117,6 @@ export function TrackShipmentDialog({
               <p className="text-sm">{shipment.estimatedArrival}</p>
             </div>
           </div>
-
-          <Separator className="my-4" />
-
-          <h3 className="mb-4 text-lg font-medium">Tracking Timeline</h3>
-          <div className="space-y-4">
-            {trackingData.map((event, index) => (
-              <div key={index} className="flex items-start">
-                <div className="mt-0.5 mr-3">
-                  {event.completed ? (
-                    <CheckCircle className="h-5 w-5 text-green-500" />
-                  ) : (
-                    <Clock className="h-5 w-5 text-gray-400" />
-                  )}
-                </div>
-                <div className="flex-1">
-                  <div className="flex justify-between">
-                    <p className="font-medium">{event.status}</p>
-                    <p className="text-muted-foreground text-sm">
-                      {event.date}, {event.time}
-                    </p>
-                  </div>
-                  <p className="text-sm">{event.location}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-6 rounded-lg border border-blue-100 bg-blue-50 p-3">
-            <div className="flex items-start">
-              <Truck className="mt-0.5 mr-2 h-5 w-5 text-blue-500" />
-              <div>
-                <h4 className="font-medium text-blue-800">Current Location</h4>
-                <p className="text-sm text-blue-700">
-                  Your shipment is currently at Local Distribution Center,
-                  Columbus and is expected to arrive at the destination by 4:00
-                  PM today.
-                </p>
-              </div>
-            </div>
-          </div>
         </div>
         <DialogFooter>
           <Button onClick={() => setOpen(false)}>Close</Button>

@@ -20,8 +20,9 @@ import type { Route } from './+types/_inventory.inventory';
 import { DeleteDialog } from '~/components/delete-dialog';
 import { UpdateStatusDialog } from '~/components/update-status-dialog';
 import { TrackShipmentDialog } from '~/components/track-shipment-dialog';
+import { useState } from 'react';
 
-const shipments = [
+const deliveries = [
   {
     id: 'SH-1001',
     product: 'Organic Tomatoes',
@@ -68,14 +69,18 @@ const shipments = [
   },
 ];
 
-type ShipmentType = (typeof shipments)[number];
+export type DeliveryType = (typeof deliveries)[number];
 
 export async function loader() {
-  return { shipments: shipments as ShipmentType[] };
+  return { deliveries: deliveries as DeliveryType[] };
 }
 
 export default function WarehousesPage(props: Route.ComponentProps) {
-  const { shipments } = props.loaderData;
+  const { deliveries: defaultDeliveries } = props.loaderData;
+
+  const [deliveries, setDeliveries] = useState<DeliveryType[]>(
+    defaultDeliveries || []
+  );
 
   return (
     <SidebarProvider
@@ -122,44 +127,119 @@ export default function WarehousesPage(props: Route.ComponentProps) {
             </TabsList>
             <TabsContent value="all" className="space-y-4">
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-2">
-                {shipments.map((shipment) => (
-                  <ShipmentCard key={shipment.id} shipment={shipment} />
+                {deliveries.map((delivery) => (
+                  <ShipmentCard
+                    key={delivery.id}
+                    shipment={delivery}
+                    onDelete={() => {
+                      setDeliveries(
+                        deliveries.filter((d) => d.id !== delivery.id)
+                      );
+                    }}
+                    onUpdate={(updatedDelivery) => {
+                      setDeliveries(
+                        deliveries.map((d) =>
+                          d.id === updatedDelivery.id ? updatedDelivery : d
+                        )
+                      );
+                    }}
+                  />
                 ))}
               </div>
             </TabsContent>
             <TabsContent value="in-transit" className="space-y-4">
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-2">
-                {shipments
-                  .filter((shipment) => shipment.status === 'In Transit')
-                  .map((shipment) => (
-                    <ShipmentCard key={shipment.id} shipment={shipment} />
+                {deliveries
+                  .filter((delivery) => delivery.status === 'In Transit')
+                  .map((delivery) => (
+                    <ShipmentCard
+                      key={delivery.id}
+                      shipment={delivery}
+                      onDelete={() => {
+                        setDeliveries(
+                          deliveries.filter((d) => d.id !== delivery.id)
+                        );
+                      }}
+                      onUpdate={(updatedDelivery) => {
+                        setDeliveries(
+                          deliveries.map((d) =>
+                            d.id === updatedDelivery.id ? updatedDelivery : d
+                          )
+                        );
+                      }}
+                    />
                   ))}
               </div>
             </TabsContent>
             <TabsContent value="scheduled" className="space-y-4">
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-2">
-                {shipments
-                  .filter((shipment) => shipment.status === 'Scheduled')
-                  .map((shipment) => (
-                    <ShipmentCard key={shipment.id} shipment={shipment} />
+                {deliveries
+                  .filter((delivery) => delivery.status === 'Scheduled')
+                  .map((delivery) => (
+                    <ShipmentCard
+                      key={delivery.id}
+                      shipment={delivery}
+                      onDelete={() => {
+                        setDeliveries(
+                          deliveries.filter((d) => d.id !== delivery.id)
+                        );
+                      }}
+                      onUpdate={(updatedDelivery) => {
+                        setDeliveries(
+                          deliveries.map((d) =>
+                            d.id === updatedDelivery.id ? updatedDelivery : d
+                          )
+                        );
+                      }}
+                    />
                   ))}
               </div>
             </TabsContent>
             <TabsContent value="delivered" className="space-y-4">
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-2">
-                {shipments
-                  .filter((shipment) => shipment.status === 'Delivered')
-                  .map((shipment) => (
-                    <ShipmentCard key={shipment.id} shipment={shipment} />
+                {deliveries
+                  .filter((delivery) => delivery.status === 'Delivered')
+                  .map((delivery) => (
+                    <ShipmentCard
+                      key={delivery.id}
+                      shipment={delivery}
+                      onDelete={() => {
+                        setDeliveries(
+                          deliveries.filter((d) => d.id !== delivery.id)
+                        );
+                      }}
+                      onUpdate={(updatedDelivery) => {
+                        setDeliveries(
+                          deliveries.map((d) =>
+                            d.id === updatedDelivery.id ? updatedDelivery : d
+                          )
+                        );
+                      }}
+                    />
                   ))}
               </div>
             </TabsContent>
             <TabsContent value="delayed" className="space-y-4">
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-2">
-                {shipments
-                  .filter((shipment) => shipment.status === 'Delayed')
-                  .map((shipment) => (
-                    <ShipmentCard key={shipment.id} shipment={shipment} />
+                {deliveries
+                  .filter((delivery) => delivery.status === 'Delayed')
+                  .map((delivery) => (
+                    <ShipmentCard
+                      key={delivery.id}
+                      shipment={delivery}
+                      onDelete={() => {
+                        setDeliveries(
+                          deliveries.filter((d) => d.id !== delivery.id)
+                        );
+                      }}
+                      onUpdate={(updatedDelivery) => {
+                        setDeliveries(
+                          deliveries.map((d) =>
+                            d.id === updatedDelivery.id ? updatedDelivery : d
+                          )
+                        );
+                      }}
+                    />
                   ))}
               </div>
             </TabsContent>
@@ -171,11 +251,13 @@ export default function WarehousesPage(props: Route.ComponentProps) {
 }
 
 type ShipmentCardProps = {
-  shipment: ShipmentType;
+  shipment: DeliveryType;
+  onDelete: () => void;
+  onUpdate: (shipment: DeliveryType) => void;
 };
 
 function ShipmentCard(props: ShipmentCardProps) {
-  const { shipment } = props;
+  const { shipment, onDelete, onUpdate } = props;
 
   let statusColor = 'bg-blue-50 text-blue-700 border-blue-200';
   if (shipment.status === 'Delivered') {
@@ -241,7 +323,7 @@ function ShipmentCard(props: ShipmentCardProps) {
               Track
             </Button>
           </TrackShipmentDialog>
-          <UpdateStatusDialog shipment={shipment}>
+          <UpdateStatusDialog shipment={shipment} onUpdate={onUpdate}>
             <Button size="sm" variant="outline">
               <Edit className="mr-1 h-4 w-4" />
               Update
@@ -250,9 +332,7 @@ function ShipmentCard(props: ShipmentCardProps) {
           <DeleteDialog
             title="Cancel Shipment"
             description={`Are you sure you want to cancel shipment ${shipment.id}? This action cannot be undone.`}
-            onDelete={() => {
-              console.log('cancel shipment');
-            }}
+            onDelete={onDelete}
           >
             <Button
               size="sm"

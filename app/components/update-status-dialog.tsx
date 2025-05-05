@@ -22,27 +22,25 @@ import {
 } from '~/components/ui/select';
 import { Textarea } from '~/components/ui/textarea';
 import { useState } from 'react';
+import type { DeliveryType } from '~/routes/_inventory.inventory';
 
 interface UpdateStatusDialogProps {
-  shipment: {
-    id: string;
-    product: string;
-    status: string;
-  };
+  shipment: DeliveryType;
   children: React.ReactNode;
+  onUpdate: (shipment: DeliveryType) => void;
 }
 
 export function UpdateStatusDialog({
   shipment,
   children,
+  onUpdate,
 }: UpdateStatusDialogProps) {
   const [open, setOpen] = useState(false);
   const [status, setStatus] = useState(shipment.status);
-  const [notes, setNotes] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Updated status:', { status, notes });
+    onUpdate({ ...shipment, status });
     setOpen(false);
   };
 
@@ -76,16 +74,6 @@ export function UpdateStatusDialog({
                   <SelectItem value="Cancelled">Cancelled</SelectItem>
                 </SelectContent>
               </Select>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="notes">Notes</Label>
-              <Textarea
-                id="notes"
-                value={notes}
-                onChange={(e) => setNotes(e.target.value)}
-                placeholder="Add any additional notes about this status update"
-                rows={4}
-              />
             </div>
           </div>
           <DialogFooter>
