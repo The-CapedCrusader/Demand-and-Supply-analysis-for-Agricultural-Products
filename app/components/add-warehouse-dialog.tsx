@@ -14,39 +14,25 @@ import {
 } from '~/components/ui/dialog';
 import { Input } from '~/components/ui/input';
 import { Label } from '~/components/ui/label';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useFetcher } from 'react-router';
+import { Switch } from './ui/switch';
 
-export function AddWarehouseDialog({
-  children,
-}: {
+type AddWarehouseDialogProps = {
   children: React.ReactNode;
-}) {
+};
+
+export function AddWarehouseDialog(props: AddWarehouseDialogProps) {
+  const { children } = props;
+
+  const fetcher = useFetcher();
   const [open, setOpen] = useState(false);
-  const [formData, setFormData] = useState({
-    name: '',
-    location: '',
-    capacity: '',
-    manager: '',
-    contact: '',
-  });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log('New warehouse:', formData);
-    setFormData({
-      name: '',
-      location: '',
-      capacity: '',
-      manager: '',
-      contact: '',
-    });
-    setOpen(false);
-  };
+  useEffect(() => {
+    if (fetcher.data?.success) {
+      setOpen(false);
+    }
+  }, [fetcher.data]);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -59,21 +45,24 @@ export function AddWarehouseDialog({
             done.
           </DialogDescription>
         </DialogHeader>
-        <form onSubmit={handleSubmit}>
+        <fetcher.Form method="post">
+          <input type="hidden" name="intent" value="create" />
+
           <div className="grid gap-4 py-4">
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="name" className="text-right">
                 Name
               </Label>
-              <Input
-                id="name"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                className="col-span-3"
-                required
-              />
+              <Input id="name" name="name" className="col-span-3" required />
             </div>
+
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="type" className="text-right">
+                Type
+              </Label>
+              <Input id="type" name="type" className="col-span-3" required />
+            </div>
+
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="location" className="text-right">
                 Location
@@ -81,8 +70,6 @@ export function AddWarehouseDialog({
               <Input
                 id="location"
                 name="location"
-                value={formData.location}
-                onChange={handleChange}
                 className="col-span-3"
                 required
               />
@@ -94,39 +81,17 @@ export function AddWarehouseDialog({
               <Input
                 id="capacity"
                 name="capacity"
-                value={formData.capacity}
-                onChange={handleChange}
                 className="col-span-3"
                 placeholder="e.g., 50,000 sq ft"
                 required
               />
             </div>
+
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="manager" className="text-right">
-                Manager
+              <Label htmlFor="temperatureControlled" className="text-right">
+                Temperature Controlled
               </Label>
-              <Input
-                id="manager"
-                name="manager"
-                value={formData.manager}
-                onChange={handleChange}
-                className="col-span-3"
-                required
-              />
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="contact" className="text-right">
-                Contact
-              </Label>
-              <Input
-                id="contact"
-                name="contact"
-                value={formData.contact}
-                onChange={handleChange}
-                className="col-span-3"
-                placeholder="Email or phone number"
-                required
-              />
+              <Switch id="temperatureControlled" name="temperatureControlled" />
             </div>
           </div>
           <DialogFooter>
@@ -139,7 +104,7 @@ export function AddWarehouseDialog({
             </Button>
             <Button type="submit">Add Warehouse</Button>
           </DialogFooter>
-        </form>
+        </fetcher.Form>
       </DialogContent>
     </Dialog>
   );

@@ -4,7 +4,6 @@ import { Badge } from '~/components/ui/badge';
 import { Search, Plus, Edit, Trash, Package } from 'lucide-react';
 import { AddWarehouseDialog } from '~/components/add-warehouse-dialog';
 import { EditWarehouseDialog } from '~/components/edit-warehouse-dialog';
-import { ManageInventoryDialog } from '~/components/manage-inventory-dialog';
 import { DeleteDialog } from '~/components/delete-dialog';
 import { DashboardCard } from '~/components/dashboard-card';
 import { cn } from '~/lib/utils';
@@ -13,14 +12,14 @@ import { SidebarProvider } from '~/components/ui/sidebar';
 import { SiteHeader } from '~/components/site-header';
 import { SidebarInset } from '~/components/ui/sidebar';
 import type { Route } from './+types/_warehouse.warehouses';
+import { getDatabaseConnection } from '~/lib/database.server';
+import invariant from 'tiny-invariant';
 
 export type WarehouseType = {
   WarehouseID: number;
   WarehouseName: string;
   WarehouseType: string;
-  AddressLine1: string;
-  AddressLine2: string;
-  Zip: string;
+  Location: string;
   Capacity: number;
   TemperatureControlled: number;
   created_at: Date;
@@ -29,7 +28,7 @@ export type WarehouseType = {
 
 export type DBWarehouseType = Pick<
   WarehouseType,
-  'WarehouseID' | 'WarehouseName' | 'AddressLine1' | 'Capacity'
+  'WarehouseID' | 'WarehouseName' | 'Location' | 'Capacity'
 > & {
   Utilization: number;
 };
@@ -38,28 +37,28 @@ const warehouses = [
   {
     WarehouseID: 1,
     WarehouseName: 'Central Distribution Center',
-    AddressLine1: 'Chicago, IL',
+    Location: 'Chicago, IL',
     Capacity: 50000,
     Utilization: 78,
   },
   {
     WarehouseID: 2,
     WarehouseName: 'East Coast Facility',
-    AddressLine1: 'Newark, NJ',
+    Location: 'Newark, NJ',
     Capacity: 35000,
     Utilization: 92,
   },
   {
     WarehouseID: 3,
     WarehouseName: 'West Coast Hub',
-    AddressLine1: 'Oakland, CA',
+    Location: 'Oakland, CA',
     Capacity: 45000,
     Utilization: 65,
   },
   {
     WarehouseID: 4,
     WarehouseName: 'Southern Distribution Center',
-    AddressLine1: 'Atlanta, GA',
+    Location: 'Atlanta, GA',
     Capacity: 40000,
     Utilization: 81,
   },
@@ -77,23 +76,61 @@ const utilizationData = {
   ],
 };
 
+export async function action({ request }: Route.ActionArgs) {
+  const formData = await request.formData();
+
+  const intent = formData.get('intent');
+  const conn = await getDatabaseConnection();
+
+  switch (intent) {
+    case 'create':
+      const warehouseName = formData.get('name');
+      const warehouseLocation = formData.get('location');
+      const warehouseCapacity = formData.get('capacity');
+      const warehouseType = formData.get('type');
+      const warehouseTemperatureControlled =
+        formData.get('temperatureControlled') ?? false;
+
+      const [result] = await conn.execute(
+        'INSERT INTO WAREHOUSE_T (WarehouseName, AddressLine1, Capacity, WarehouseType, TemperatureControlled) VALUES (?, ?, ?, ?, ?)',
+        [
+          warehouseName,
+          warehouseLocation,
+          warehouseCapacity,
+          warehouseType,
+          warehouseTemperatureControlled,
+        ]
+      );
+
+      const warehouseId = ((result as any).insertId ?? 1) as number;
+
+      for (let i = 1; i <= 2; i++) {
+        await conn.execute(
+          'INSERT INTO WAREHOUSE_PRODUCT_T (WarehouseID, ProductID, StockQuantity, ProductCapacity) VALUES (?, ?, ?, ?)',
+          [warehouseId, i, 0, 10000]
+        );
+      }
+
+      return { success: true };
+      break;
+    default:
+      break;
+  }
+  // const
+}
+
 export async function loader() {
-  // const conn = await getDatabaseConnection();
-  // const [rows] = await conn.execute('SELECT * FROM WAREHOUSE_T');
+  const conn = await getDatabaseConnection();
+  const [rows] = await conn.execute(
+    `SELECT w.WarehouseID, w.WarehouseName, w.Capacity, (w.Capacity - SUM(wp.ProductCapacity)) as Utilization
+    FROM WAREHOUSE_T as w, WAREHOUSE_PRODUCT_T as wp
+    WHERE wp.WarehouseID = w.WarehouseID
+    GROUP BY w.WarehouseID
+    ORDER BY w.WarehouseID DESC
+    `
+  );
 
-  // const [rows] = await conn.execute(
-  //   `SELECT w.WarehouseID, w.WarehouseName, w.Capacity, (w.Capacity - SUM(wp.ProductCapacity)) as Utilization
-  //   FROM WAREHOUSE_T as w, WAREHOUSE_PRODUCT_T as wp
-  //   WHERE wp.WarehouseID = w.WarehouseID
-  //   GROUP BY w.WarehouseID`
-  // );
-  // console.log('-'.repeat(20));
-  // console.log(rows);
-  // console.log('-'.repeat(20));
-
-  // return { warehouses: rows as WarehouseType[] };
-
-  return { warehouses };
+  return { warehouses: rows as DBWarehouseType[] };
 }
 
 export default function WarehousesPage(props: Route.ComponentProps) {
@@ -145,7 +182,10 @@ export default function WarehousesPage(props: Route.ComponentProps) {
             <TabsContent value="all" className="space-y-4">
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
                 {warehouses.map((warehouse) => (
-                  <WarehouseCard key={warehouse.id} warehouse={warehouse} />
+                  <WarehouseCard
+                    key={warehouse.WarehouseID}
+                    warehouse={warehouse}
+                  />
                 ))}
               </div>
             </TabsContent>
@@ -211,7 +251,7 @@ export function WarehouseCard(props: WarehouseCardProps) {
           <div>
             <h3 className="font-semibold">{warehouse.WarehouseName}</h3>
             <p className="text-muted-foreground mt-1 text-sm">
-              {warehouse.AddressLine1}
+              {warehouse.Location}
             </p>
           </div>
           <UtilizationBadge utilization={warehouse.Utilization} />
@@ -230,18 +270,10 @@ export function WarehouseCard(props: WarehouseCardProps) {
             </Button>
           </EditWarehouseDialog>
 
-          <ManageInventoryDialog
-            // FIXME: warehouse types and products
-            warehouse={warehouse}
-          >
-            <Button size="sm" variant="outline">
-              <Package className="mr-1 h-4 w-4" />
-              Inventory
-            </Button>
-          </ManageInventoryDialog>
           <DeleteDialog
             title="Delete Warehouse"
             description={`Are you sure you want to delete ${warehouse.WarehouseName}? This action cannot be undone.`}
+            onDelete={() => {}}
           >
             <Button
               size="sm"
