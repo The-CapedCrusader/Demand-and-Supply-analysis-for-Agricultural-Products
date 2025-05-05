@@ -37,7 +37,6 @@ export function WarehouseUtilizationChart() {
                   },
                 },
               }}
-              redraw={true}
             />
           </ChartContainer>
         </div>
