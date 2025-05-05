@@ -1,7 +1,7 @@
 import { redirect } from 'react-router';
 import type { Route } from './+types/route';
-import { hashPassword, userDetailsCookie } from '~/lib/password.server';
 import { getDatabaseConnection } from '~/lib/database.server';
+import { hashPassword, userDetailsCookie } from '~/lib/password.server';
 
 export const action = async (args: Route.ActionArgs) => {
   const { request } = args;

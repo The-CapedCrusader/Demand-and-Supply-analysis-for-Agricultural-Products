@@ -69,6 +69,8 @@ const run = async () => {
         console.error(
           `❌ [${file}] Statement ${i + 1} failed:\n→ ${sql}\n↳ ${err}`
         );
+
+        process.exit(1);
       }
     }
   }

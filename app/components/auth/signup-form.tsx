@@ -16,6 +16,7 @@ export function SignupForm(props: SignUpFormProps) {
   const fetcher = useFetcher({
     key: 'signup-form',
   });
+
   const isLoading = fetcher.state !== 'idle';
   const error = fetcher.data?.error;
 
