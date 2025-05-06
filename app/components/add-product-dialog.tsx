@@ -5,6 +5,7 @@ import type React from 'react';
 import { z } from 'zod';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useFetcher } from 'react-router';
 import { Button } from '~/components/ui/button';
 import { zodResolver } from '@hookform/resolvers/zod';
 
@@ -80,6 +81,7 @@ export function AddProductDialog({
   seasonalities,
 }: AddProductDialogProps) {
   const [open, setOpen] = useState(false);
+  const fetcher = useFetcher();
 
   // Initialize the form with product data
   const form = useForm<ProductFormValues>({
@@ -102,26 +104,23 @@ export function AddProductDialog({
   // Handle form submission
   async function onSubmit(data: ProductFormValues) {
     try {
-      console.log('Submitting product data:', data);
-
-      await fetch('/products', {
+      fetcher.submit(data, {
         method: 'POST',
-        body: JSON.stringify(data),
-        headers: { 'Content-Type': 'application/json' },
+        action: '/products',
+        encType: 'application/json',
       });
 
       toast({
         title: 'Product added',
         description: `${data.ProductName} has been added successfully.`,
       });
+      setOpen(false);
     } catch (error) {
       toast({
         title: 'Error',
         variant: 'destructive',
         description: 'Failed to add product.',
       });
-    } finally {
-      setOpen(false);
     }
   }
 

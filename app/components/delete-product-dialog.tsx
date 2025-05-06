@@ -3,6 +3,7 @@
 import type React from 'react';
 
 import { useState } from 'react';
+import { useFetcher } from 'react-router';
 import { Button } from '~/components/ui/button';
 import {
   Dialog,
@@ -29,29 +30,30 @@ export function DeleteDialog({
   description,
 }: DeleteDialogProps) {
   const [open, setOpen] = useState(false);
+  const fetcher = useFetcher();
 
   const handleDelete = async () => {
     try {
-      console.log('Deleting product with ID:', id);
-
-      await fetch('/products', {
-        method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ProductID: parseInt(id, 10) }),
-      });
+      fetcher.submit(
+        { ProductID: parseInt(id, 10) },
+        {
+          method: 'DELETE',
+          action: '/products',
+          encType: 'application/json',
+        }
+      );
 
       toast({
         title: 'Item deleted',
         description: 'The item has been successfully deleted.',
       });
+      setOpen(false);
     } catch (error) {
       toast({
         title: 'Error',
         variant: 'destructive',
         description: 'Failed to delete item.',
       });
-    } finally {
-      setOpen(false);
     }
   };
 
