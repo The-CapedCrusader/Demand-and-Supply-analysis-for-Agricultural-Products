@@ -19,20 +19,11 @@ export function SiteHeader() {
           <IconLeaf className="text-primary h-5 w-5" />
           <h1 className="text-base font-medium">Krishok's</h1>
         </div>
-        <div className="relative ml-6 hidden w-64 md:flex">
-          <Input
-            type="search"
-            placeholder="Search crops, prices..."
-            className="h-9 pl-9"
-          />
-          <IconSearch className="text-muted-foreground absolute top-2.5 left-3 h-4 w-4" />
-        </div>
         <div className="ml-auto flex items-center gap-2">
           <Button variant="outline" size="sm" className="hidden md:flex">
             Data Entry
           </Button>
           <ThemeModeToggle />
-          {/* <AuthNavButton /> */}
         </div>
       </div>
     </header>

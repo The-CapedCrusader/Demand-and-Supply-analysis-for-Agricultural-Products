@@ -33,6 +33,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '~/components/ui/sidebar';
+import { BoxesIcon, WarehouseIcon } from 'lucide-react';
 
 const data = {
   user: {
@@ -154,9 +155,14 @@ const data = {
       icon: IconFileAnalytics,
     },
     {
-      name: 'Inventory Scanner',
-      url: '/inventory-scanner',
-      icon: IconBarcode,
+      name: 'Warehouses',
+      url: '/warehouses',
+      icon: WarehouseIcon,
+    },
+    {
+      name: 'Inventory',
+      url: '/inventory',
+      icon: BoxesIcon,
     },
   ],
 };

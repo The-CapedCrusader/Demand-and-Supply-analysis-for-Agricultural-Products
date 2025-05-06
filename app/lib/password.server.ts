@@ -38,17 +38,17 @@ export async function isLoggedIn(request: Request) {
     return false;
   }
 
-//   const associatedUser = MOCK_USERS.find(
-//     (user) =>
-//       user.id === id &&
-//       user.email === email &&
-//       user.name === name &&
-//       user.role === role
-//   );
+  const associatedUser = MOCK_USERS.find(
+    (user) =>
+      user.id === id &&
+      user.email === email &&
+      user.name === name &&
+      user.role === role
+  );
 
-//   if (!associatedUser) {
-//     return false;
-//   }
+  if (!associatedUser) {
+    return false;
+  }
 
   return true;
 }
