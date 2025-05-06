@@ -1,5 +1,9 @@
 'use client';
 
+import { Link } from 'react-router';
+import { useLoaderData } from 'react-router';
+import { loader } from './route.server';
+
 import { AppSidebar } from '~/components/navigation/app-sidebar';
 import { SiteHeader } from '~/components/site-header';
 import { SidebarInset, SidebarProvider } from '~/components/ui/sidebar';
@@ -20,9 +24,18 @@ import {
   IconStar,
   IconMessage,
   IconPhone,
+  IconUsers,
+  IconSettings,
 } from '@tabler/icons-react';
 
+export { loader };
+
 export default function BuyersAndSellersPage() {
+  const { buyers, sellers } = useLoaderData<{
+    buyers: any[];
+    sellers: any[];
+  }>();
+
   return (
     <SidebarProvider
       style={
@@ -54,11 +67,28 @@ export default function BuyersAndSellersPage() {
                 </p>
               </div>
 
+              <div className="px-4 lg:px-6 flex justify-end gap-2 mb-2">
+                <Button variant="outline" onClick={() => window.location.href = '/buyers'}>
+                  <IconUsers className="mr-2 h-4 w-4" />
+                  Manage Buyers
+                </Button>
+                <Button variant="outline" onClick={() => window.location.href = '/sellers'}>
+                  <IconSettings className="mr-2 h-4 w-4" />
+                  Manage Sellers
+                </Button>
+              </div>
+
               <Tabs defaultValue="buyers" className="px-4 lg:px-6">
                 <TabsList className="mb-4">
-                  <TabsTrigger value="buyers">Buyers</TabsTrigger>
-                  <TabsTrigger value="sellers">Suppliers</TabsTrigger>
-                  <TabsTrigger value="marketplace">Marketplace</TabsTrigger>
+                  <TabsTrigger value="buyers">
+                    <span>Buyers</span>
+                  </TabsTrigger>
+                  <TabsTrigger value="sellers">
+                    <span>Suppliers</span>
+                  </TabsTrigger>
+                  <TabsTrigger value="marketplace">
+                    <span>Marketplace</span>
+                  </TabsTrigger>
                 </TabsList>
 
                 <TabsContent value="buyers" className="mt-0">
@@ -224,8 +254,12 @@ export default function BuyersAndSellersPage() {
                     </CardHeader>
                     <CardContent>
                     <div className="flex justify-end mb-4">
-                      <Button size="sm" className="gap-1">
-                      Add New Buyer
+                      <Button 
+                        size="sm" 
+                        className="gap-1"
+                        onClick={() => window.location.href = '/buyers'}
+                      >
+                        Add New Buyer
                       </Button>
                     </div>
                     <div className="rounded-md border">
@@ -240,51 +274,73 @@ export default function BuyersAndSellersPage() {
                         </tr>
                       </thead>
                       <tbody>
-                        <tr className="border-b">
-                        <td className="py-3 px-4">Green Valley Organics</td>
-                        <td className="py-3 px-4">Organic Rice, Wheat</td>
-                        <td className="py-3 px-4">Portland, OR</td>
-                        <td className="py-3 px-4">
-                          <Badge className="border-0 bg-green-100 text-green-800">Active</Badge>
-                        </td>
-                        <td className="py-3 px-4">
-                          <div className="flex justify-end gap-2">
-                          <Button variant="outline" size="sm">View</Button>
-                          <Button variant="outline" size="sm">Edit</Button>
-                          <Button variant="destructive" size="sm">Delete</Button>
-                          </div>
-                        </td>
-                        </tr>
-                        <tr className="border-b">
-                        <td className="py-3 px-4">Midwest Grain Processing</td>
-                        <td className="py-3 px-4">Corn, Soybeans, Wheat</td>
-                        <td className="py-3 px-4">Des Moines, IA</td>
-                        <td className="py-3 px-4">
-                          <Badge className="border-0 bg-green-100 text-green-800">Active</Badge>
-                        </td>
-                        <td className="py-3 px-4">
-                          <div className="flex justify-end gap-2">
-                          <Button variant="outline" size="sm">View</Button>
-                          <Button variant="outline" size="sm">Edit</Button>
-                          <Button variant="destructive" size="sm">Delete</Button>
-                          </div>
-                        </td>
-                        </tr>
-                        <tr>
-                        <td className="py-3 px-4">Farm Fresh Foods</td>
-                        <td className="py-3 px-4">Fruits, Vegetables</td>
-                        <td className="py-3 px-4">Chicago, IL</td>
-                        <td className="py-3 px-4">
-                          <Badge className="border-0 bg-yellow-100 text-yellow-800">Pending</Badge>
-                        </td>
-                        <td className="py-3 px-4">
-                          <div className="flex justify-end gap-2">
-                          <Button variant="outline" size="sm">View</Button>
-                          <Button variant="outline" size="sm">Edit</Button>
-                          <Button variant="destructive" size="sm">Delete</Button>
-                          </div>
-                        </td>
-                        </tr>
+                        {buyers && buyers.length > 0 ? (
+                          buyers.map((buyer: any) => (
+                            <tr key={buyer.UserID} className="border-b">
+                              <td className="py-3 px-4">{buyer.Name}</td>
+                              <td className="py-3 px-4">N/A</td>
+                              <td className="py-3 px-4">{[buyer.AddressLine1, buyer.AddressLine2, buyer.Zip].filter(Boolean).join(', ')}</td>
+                              <td className="py-3 px-4">
+                                <Badge className="border-0 bg-green-100 text-green-800">Active</Badge>
+                              </td>
+                              <td className="py-3 px-4">
+                                <div className="flex justify-end gap-2">
+                                  <Button variant="outline" size="sm">View</Button>
+                                  <Button variant="outline" size="sm">Edit</Button>
+                                  <Button variant="destructive" size="sm">Delete</Button>
+                                </div>
+                              </td>
+                            </tr>
+                          ))
+                        ) : (
+                          <>
+                            <tr className="border-b">
+                              <td className="py-3 px-4">Green Valley Organics</td>
+                              <td className="py-3 px-4">Organic Rice, Wheat</td>
+                              <td className="py-3 px-4">Portland, OR</td>
+                              <td className="py-3 px-4">
+                                <Badge className="border-0 bg-green-100 text-green-800">Active</Badge>
+                              </td>
+                              <td className="py-3 px-4">
+                                <div className="flex justify-end gap-2">
+                                  <Button variant="outline" size="sm">View</Button>
+                                  <Button variant="outline" size="sm">Edit</Button>
+                                  <Button variant="destructive" size="sm">Delete</Button>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr className="border-b">
+                              <td className="py-3 px-4">Midwest Grain Processing</td>
+                              <td className="py-3 px-4">Corn, Soybeans, Wheat</td>
+                              <td className="py-3 px-4">Des Moines, IA</td>
+                              <td className="py-3 px-4">
+                                <Badge className="border-0 bg-green-100 text-green-800">Active</Badge>
+                              </td>
+                              <td className="py-3 px-4">
+                                <div className="flex justify-end gap-2">
+                                  <Button variant="outline" size="sm">View</Button>
+                                  <Button variant="outline" size="sm">Edit</Button>
+                                  <Button variant="destructive" size="sm">Delete</Button>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td className="py-3 px-4">Farm Fresh Foods</td>
+                              <td className="py-3 px-4">Fruits, Vegetables</td>
+                              <td className="py-3 px-4">Chicago, IL</td>
+                              <td className="py-3 px-4">
+                                <Badge className="border-0 bg-yellow-100 text-yellow-800">Pending</Badge>
+                              </td>
+                              <td className="py-3 px-4">
+                                <div className="flex justify-end gap-2">
+                                  <Button variant="outline" size="sm">View</Button>
+                                  <Button variant="outline" size="sm">Edit</Button>
+                                  <Button variant="destructive" size="sm">Delete</Button>
+                                </div>
+                              </td>
+                            </tr>
+                          </>
+                        )}
                       </tbody>
                       </table>
                     </div>
@@ -462,8 +518,12 @@ export default function BuyersAndSellersPage() {
                           </CardHeader>
                           <CardContent>
                           <div className="flex justify-end mb-4">
-                            <Button size="sm" className="gap-1">
-                            Add New Supplier
+                            <Button 
+                              size="sm" 
+                              className="gap-1"
+                              onClick={() => window.location.href = '/sellers'}
+                            >
+                              Add New Supplier
                             </Button>
                           </div>
                           <div className="rounded-md border">
@@ -478,51 +538,73 @@ export default function BuyersAndSellersPage() {
                               </tr>
                             </thead>
                             <tbody>
-                              <tr className="border-b">
-                              <td className="py-3 px-4">AgriSupply Co.</td>
-                              <td className="py-3 px-4">Seeds, Fertilizers, Tools</td>
-                              <td className="py-3 px-4">Lincoln, NE</td>
-                              <td className="py-3 px-4">
-                                <Badge className="border-0 bg-green-100 text-green-800">Active</Badge>
-                              </td>
-                              <td className="py-3 px-4">
-                                <div className="flex justify-end gap-2">
-                                <Button variant="outline" size="sm">View</Button>
-                                <Button variant="outline" size="sm">Edit</Button>
-                                <Button variant="destructive" size="sm">Delete</Button>
-                                </div>
-                              </td>
-                              </tr>
-                              <tr className="border-b">
-                              <td className="py-3 px-4">Farm Equipment Inc.</td>
-                              <td className="py-3 px-4">Tractors, Irrigation Systems</td>
-                              <td className="py-3 px-4">Kansas City, MO</td>
-                              <td className="py-3 px-4">
-                                <Badge className="border-0 bg-green-100 text-green-800">Active</Badge>
-                              </td>
-                              <td className="py-3 px-4">
-                                <div className="flex justify-end gap-2">
-                                <Button variant="outline" size="sm">View</Button>
-                                <Button variant="outline" size="sm">Edit</Button>
-                                <Button variant="destructive" size="sm">Delete</Button>
-                                </div>
-                              </td>
-                              </tr>
-                              <tr>
-                              <td className="py-3 px-4">Organic Seed Supply</td>
-                              <td className="py-3 px-4">Organic Seeds, Fertilizers</td>
-                              <td className="py-3 px-4">Portland, OR</td>
-                              <td className="py-3 px-4">
-                                <Badge className="border-0 bg-yellow-100 text-yellow-800">Pending</Badge>
-                              </td>
-                              <td className="py-3 px-4">
-                                <div className="flex justify-end gap-2">
-                                <Button variant="outline" size="sm">View</Button>
-                                <Button variant="outline" size="sm">Edit</Button>
-                                <Button variant="destructive" size="sm">Delete</Button>
-                                </div>
-                              </td>
-                              </tr>
+                              {sellers && sellers.length > 0 ? (
+                                sellers.map((seller: any) => (
+                                  <tr key={seller.LicenseID} className="border-b">
+                                    <td className="py-3 px-4">{seller.Name}</td>
+                                    <td className="py-3 px-4">N/A</td>
+                                    <td className="py-3 px-4">{[seller.AddressLine1, seller.AddressLine2, seller.Zip].filter(Boolean).join(', ')}</td>
+                                    <td className="py-3 px-4">
+                                      <Badge className="border-0 bg-green-100 text-green-800">Active</Badge>
+                                    </td>
+                                    <td className="py-3 px-4">
+                                      <div className="flex justify-end gap-2">
+                                        <Button variant="outline" size="sm">View</Button>
+                                        <Button variant="outline" size="sm">Edit</Button>
+                                        <Button variant="destructive" size="sm">Delete</Button>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                ))
+                              ) : (
+                                <>
+                                  <tr className="border-b">
+                                    <td className="py-3 px-4">AgriSupply Co.</td>
+                                    <td className="py-3 px-4">Seeds, Fertilizers, Tools</td>
+                                    <td className="py-3 px-4">Lincoln, NE</td>
+                                    <td className="py-3 px-4">
+                                      <Badge className="border-0 bg-green-100 text-green-800">Active</Badge>
+                                    </td>
+                                    <td className="py-3 px-4">
+                                      <div className="flex justify-end gap-2">
+                                        <Button variant="outline" size="sm">View</Button>
+                                        <Button variant="outline" size="sm">Edit</Button>
+                                        <Button variant="destructive" size="sm">Delete</Button>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                  <tr className="border-b">
+                                    <td className="py-3 px-4">Farm Equipment Inc.</td>
+                                    <td className="py-3 px-4">Tractors, Irrigation Systems</td>
+                                    <td className="py-3 px-4">Kansas City, MO</td>
+                                    <td className="py-3 px-4">
+                                      <Badge className="border-0 bg-green-100 text-green-800">Active</Badge>
+                                    </td>
+                                    <td className="py-3 px-4">
+                                      <div className="flex justify-end gap-2">
+                                        <Button variant="outline" size="sm">View</Button>
+                                        <Button variant="outline" size="sm">Edit</Button>
+                                        <Button variant="destructive" size="sm">Delete</Button>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td className="py-3 px-4">Organic Seed Supply</td>
+                                    <td className="py-3 px-4">Organic Seeds, Fertilizers</td>
+                                    <td className="py-3 px-4">Portland, OR</td>
+                                    <td className="py-3 px-4">
+                                      <Badge className="border-0 bg-yellow-100 text-yellow-800">Pending</Badge>
+                                    </td>
+                                    <td className="py-3 px-4">
+                                      <div className="flex justify-end gap-2">
+                                        <Button variant="outline" size="sm">View</Button>
+                                        <Button variant="outline" size="sm">Edit</Button>
+                                        <Button variant="destructive" size="sm">Delete</Button>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                </>
+                              )}
                             </tbody>
                             </table>
                           </div>
@@ -556,11 +638,11 @@ export default function BuyersAndSellersPage() {
                         </CardContent>
                         </Card>
                       </TabsContent>
-                      </Tabs>
-                    </div>
-                    </div>
+                    </Tabs>
                   </div>
-                  </SidebarInset>
-                </SidebarProvider>
-                );
-              }
+                </div>
+              </div>
+            </SidebarInset>
+          </SidebarProvider>
+        );
+      } 
