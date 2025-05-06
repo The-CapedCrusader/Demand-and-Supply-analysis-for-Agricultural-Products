@@ -301,12 +301,7 @@ export function AddProductDialog({
               >
                 Cancel
               </Button>
-              <Button
-                type="submit"
-                className="bg-primary-500 hover:bg-primary-600 text-white"
-              >
-                Add Product
-              </Button>
+              <Button type="submit">Add Product</Button>
             </DialogFooter>
           </form>
         </Form>

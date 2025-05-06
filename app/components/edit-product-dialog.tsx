@@ -310,12 +310,7 @@ export function EditProductDialog({
               >
                 Cancel
               </Button>
-              <Button
-                type="submit"
-                className="bg-primary-500 hover:bg-primary-600 text-white"
-              >
-                Save Changes
-              </Button>
+              <Button type="submit">Save Changes</Button>
             </DialogFooter>
           </form>
         </Form>

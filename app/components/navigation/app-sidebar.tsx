@@ -47,6 +47,11 @@ const data = {
       icon: IconDashboard,
     },
     {
+      title: 'Product Catalog',
+      url: '/products',
+      icon: IconDatabase,
+    },
+    {
       title: 'My Farm',
       url: '/my-farm',
       icon: IconTractor,
@@ -190,9 +195,7 @@ export function AppSidebar(props: AppSidebarProps) {
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser
-          user={props.user}
-        />
+        <NavUser user={props.user} />
       </SidebarFooter>
     </Sidebar>
   );
