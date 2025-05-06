@@ -14,14 +14,176 @@ import { DeleteDialog } from '~/components/delete-product-dialog';
 import { AddProductDialog } from '~/components/add-product-dialog';
 import { EditProductDialog } from '~/components/edit-product-dialog';
 
-import { loader } from './route.loader';
-export { loader };
-
-import { action } from './route.server';
 import { SidebarInset, SidebarProvider } from '~/components/ui/sidebar';
 import { AppSidebar } from '~/components/navigation/app-sidebar';
 import { SiteHeader } from '~/components/site-header';
-export { action };
+
+import type {
+  Product,
+  ProductVariety,
+  ProductCategory,
+  ProductSeasonality,
+  ProductRequestBody,
+} from '~/types/product';
+
+import { getDatabaseConnection } from '~/lib/database.server';
+import type { Route } from './+types/products._index';
+
+export async function loader(args: Route.LoaderArgs) {
+  const db = await getDatabaseConnection({ init: false });
+
+  const [productRows] = await db.query(`
+		SELECT
+				p.ProductID,
+				p.ProductName,
+				p.Quantity,
+				pv.VarietyName,
+				pc.CategoryName,
+				ps.SeasonalityName,
+				p.ShelfLifeDays
+			FROM PRODUCT_T p
+			JOIN PRODUCT_VARIETY_T pv ON p.VarietyID = pv.VarietyID
+			JOIN PRODUCT_CATEGORY_T pc ON pv.CategoryID = pc.CategoryID
+			JOIN PRODUCT_SEASONALITY_T ps ON p.SeasonalityID = ps.SeasonalityID
+	`);
+
+  const [productCategoryRows] = await db.query(
+    `SELECT * FROM PRODUCT_CATEGORY_T`
+  );
+
+  const [productVarietyRows] = await db.query(
+    `SELECT * FROM PRODUCT_VARIETY_T`
+  );
+
+  const [productSeasonalityRows] = await db.query(
+    `SELECT * FROM PRODUCT_SEASONALITY_T`
+  );
+
+  const products = productRows as Product[];
+  const productVarieties = productVarietyRows as ProductVariety[];
+  const productCategories = productCategoryRows as ProductCategory[];
+  const productSeasonalities = productSeasonalityRows as ProductSeasonality[];
+
+  return {
+    products,
+    productVarieties,
+    productCategories,
+    productSeasonalities,
+  };
+}
+
+export const action = async (args: Route.ActionArgs) => {
+  const { request } = args;
+  const formData = (await request.json()) as ProductRequestBody;
+
+  const { Quantity, VarietyID, ProductName, SeasonalityID, ShelfLifeDays } =
+    formData;
+
+  const conn = await getDatabaseConnection({ init: false });
+
+  if (args.request.method === 'POST') {
+    const [existingProductRows] = await conn.query(
+      `SELECT * FROM PRODUCT_T WHERE ProductName = ?`,
+      [ProductName]
+    );
+
+    const result = existingProductRows as Array<Product>;
+
+    if (result.length > 0) {
+      return { error: 'Product already exists' };
+    }
+
+    const [createProductRows] = await conn.query(
+      `INSERT INTO PRODUCT_T (ProductName, Quantity, VarietyID, SeasonalityID, ShelfLifeDays) VALUES (?, ?, ?, ?, ?)`,
+      [ProductName, Quantity, VarietyID, SeasonalityID, ShelfLifeDays]
+    );
+
+    const createProductResult = createProductRows as unknown as {
+      insertId: number;
+      affectedRows: number;
+    };
+
+    if (createProductResult?.affectedRows === 0) {
+      return { error: 'Failed to create product' };
+    }
+
+    const [newProductRows] = await conn.query(
+      `SELECT * FROM PRODUCT_T WHERE ProductID = ?`,
+      [createProductResult.insertId]
+    );
+
+    const newProduct = newProductRows as Array<Product>;
+
+    if (newProduct.length === 0) {
+      return { error: 'Failed to fetch new product' };
+    }
+
+    return { product: newProduct[0] };
+  } else if (args.request.method === 'PUT') {
+    const { ProductID } = formData;
+
+    console.log('ProductID', ProductID);
+
+    if (!ProductID || typeof ProductID !== 'number') {
+      return { error: 'Product ID is required' };
+    }
+
+    const [updateProductRows] = await conn.query(
+      `UPDATE PRODUCT_T SET ProductName = ?, Quantity = ?, VarietyID = ?, SeasonalityID = ?, ShelfLifeDays = ? WHERE ProductID = ?`,
+      [
+        ProductName,
+        Quantity,
+        VarietyID,
+        SeasonalityID,
+        ShelfLifeDays,
+        ProductID,
+      ]
+    );
+
+    const updateProductResult = updateProductRows as unknown as {
+      affectedRows: number;
+    };
+
+    if (updateProductResult?.affectedRows === 0) {
+      return { error: 'Failed to update product' };
+    }
+
+    const [updatedProductRows] = await conn.query(
+      `SELECT * FROM PRODUCT_T WHERE ProductID = ?`,
+      [ProductID]
+    );
+
+    const updatedProduct = updatedProductRows as Array<Product>;
+
+    if (updatedProduct.length === 0) {
+      return { error: 'Failed to fetch updated product' };
+    }
+
+    return { product: updatedProduct[0] };
+  } else if (args.request.method === 'DELETE') {
+    const { ProductID } = formData;
+    console.log('ProductID', ProductID);
+
+    if (!ProductID || typeof ProductID !== 'number') {
+      return { error: 'Product ID is required' };
+    }
+
+    const [deleteProductRows] = await conn.query(
+      `DELETE FROM PRODUCT_T WHERE ProductID = ?`,
+      [ProductID]
+    );
+
+    const deleteProductResult = deleteProductRows as unknown as {
+      affectedRows: number;
+    };
+
+    if (deleteProductResult?.affectedRows === 0) {
+      return { error: 'Failed to delete product' };
+    }
+
+    return { success: true };
+  }
+};
 
 export default function ProductsPage() {
   const productData = useLoaderData<typeof loader>();
