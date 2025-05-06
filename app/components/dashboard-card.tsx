@@ -9,23 +9,24 @@ import {
 import { cn } from '~/lib/utils';
 
 interface DashboardCardProps {
-  title?: string;
+  title: string;
+  description?: string;
   className?: string;
   children: React.ReactNode;
 }
 
 export function DashboardCard({
   title,
+  description,
   className,
   children,
 }: DashboardCardProps) {
   return (
     <Card className={cn('shadow-sm', className)}>
-      {title && (
-        <CardHeader className="pb-2">
-          <CardTitle className="text-lg font-medium">{title}</CardTitle>
-        </CardHeader>
-      )}
+      <CardHeader className="pb-2">
+        <CardTitle className="text-lg font-medium">{title}</CardTitle>
+        {description && <CardDescription>{description}</CardDescription>}
+      </CardHeader>
       <CardContent>{children}</CardContent>
     </Card>
   );

@@ -34,3 +34,39 @@ export type ProductRequestBody = {
 	SeasonalityID: number,
 	ShelfLifeDays: number
 }
+
+export type ProductuctionHistory = {
+	HistoryID: number;
+	ProductID: number;
+	VarietyName: string;
+	ProductName: string;
+	CategoryName: string;
+	SeasonalityName: string;
+	Quantity: number;
+	Acreage: number;
+	Yield: number;
+	CostPerAcre: number;
+	PricePerTon: number;
+	Year: number;
+}
+
+export type ProductuctionHistoryData = {
+	ProductID: number;
+	VarietyName: string;
+	ProductName: string;
+	CategoryName: string;
+	SeasonalityName: string;
+    ProductionData: {
+		Year: number;
+        Yield: number;
+        Acreage: number;
+		HistoryID: number;
+        CostPerAcre: number;
+        PricePerTon: number;
+    }[];
+}
+
+export type SeasonalProductionHistory = {
+	Season: string;
+	Volume: number;
+}
