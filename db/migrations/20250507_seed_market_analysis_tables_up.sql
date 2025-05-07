@@ -1,0 +1,88 @@
+-- Seed data for MARKET_PRICE_TREND_T
+-- Using actual ProductIDs instead of variables
+-- ProductID 1 = Rice, 2 = Wheat, 3 = Corn, 4 = Soybeans
+
+-- Seed price trends data for 2024
+INSERT INTO MARKET_PRICE_TREND_T (ProductID, Month, Year, Price, ChangePercentage, Notes) VALUES
+(1, 'Jan', 2024, 420.00, 1.20, 'Slight increase due to seasonal demand'),
+(1, 'Feb', 2024, 430.00, 2.38, 'Continued growth as export markets open'),
+(1, 'Mar', 2024, 450.00, 4.65, 'Significant increase due to export agreements'),
+(1, 'Apr', 2024, 470.00, 4.44, 'Price growth due to supply constraints'),
+(1, 'May', 2024, 490.00, 4.26, 'Peak price due to growing international demand'),
+(1, 'Jun', 2024, 500.00, 2.04, 'Stabilizing prices with new harvest coming in'),
+
+(2, 'Jan', 2024, 350.00, 0.00, 'Stable prices following winter harvest'),
+(2, 'Feb', 2024, 340.00, -2.86, 'Slight decrease due to excess supply'),
+(2, 'Mar', 2024, 360.00, 5.88, 'Price increase due to export opportunities'),
+(2, 'Apr', 2024, 380.00, 5.56, 'Continued growth due to international demand'),
+(2, 'May', 2024, 390.00, 2.63, 'Slowing growth with anticipated good harvest'),
+(2, 'Jun', 2024, 400.00, 2.56, 'Reaching stable price point with good supply-demand balance'),
+
+(3, 'Jan', 2024, 280.00, -1.41, 'Slight decrease due to winter supplies'),
+(3, 'Feb', 2024, 290.00, 3.57, 'Recovery with increased feed demand'),
+(3, 'Mar', 2024, 270.00, -6.90, 'Price drop due to unexpected surplus'),
+(3, 'Apr', 2024, 260.00, -3.70, 'Continued decrease with good planting conditions'),
+(3, 'May', 2024, 265.00, 1.92, 'Minor recovery due to ethanol demand'),
+(3, 'Jun', 2024, 270.00, 1.89, 'Stabilizing with balanced market conditions'),
+
+(4, 'Jan', 2024, 390.00, 2.63, 'Strong start to the year with good export demand'),
+(4, 'Feb', 2024, 400.00, 2.56, 'Continued growth with increasing livestock feed usage'),
+(4, 'Mar', 2024, 410.00, 2.50, 'Steady growth from Chinese imports'),
+(4, 'Apr', 2024, 420.00, 2.44, 'Price increase due to processing demand'),
+(4, 'May', 2024, 430.00, 2.38, 'Continued growth with tight supplies'),
+(4, 'Jun', 2024, 450.00, 4.65, 'Significant jump due to drought concerns');
+
+-- Seed data for MARKET_DEMAND_SUPPLY_T
+INSERT INTO MARKET_DEMAND_SUPPLY_T (ProductID, Year, Quarter, Demand, Supply, Region, Notes) VALUES
+(1, 2024, 1, 15000, 14000, 'Global', 'Q1 2024 showing 7% supply gap'),
+(1, 2024, 2, 15500, 14800, 'Global', 'Q2 2024 with improving supply conditions'),
+(1, 2024, 3, 16200, 15500, 'Global', 'Q3 2024 forecast with harvest improvements'),
+(1, 2024, 4, 16500, 16000, 'Global', 'Q4 2024 projection with good harvest'),
+
+(2, 2024, 1, 14000, 13500, 'Global', 'Q1 2024 with manageable supply gap'),
+(2, 2024, 2, 14500, 14000, 'Global', 'Q2 2024 showing improved supply'),
+(2, 2024, 3, 15000, 14800, 'Global', 'Q3 2024 forecast with good harvest'),
+(2, 2024, 4, 15500, 15300, 'Global', 'Q4 2024 projection with near-balanced market'),
+
+(3, 2024, 1, 18000, 17200, 'Global', 'Q1 2024 with moderate supply gap'),
+(3, 2024, 2, 18500, 18000, 'Global', 'Q2 2024 with improved planting'),
+(3, 2024, 3, 19000, 18800, 'Global', 'Q3 2024 forecast with good yield'),
+(3, 2024, 4, 19500, 19300, 'Global', 'Q4 2024 projection with peak harvest'),
+
+(4, 2024, 1, 12000, 11000, 'Global', 'Q1 2024 with significant supply constraints'),
+(4, 2024, 2, 12500, 11800, 'Global', 'Q2 2024 with improving supply'),
+(4, 2024, 3, 13000, 12500, 'Global', 'Q3 2024 forecast with better balance'),
+(4, 2024, 4, 13500, 13200, 'Global', 'Q4 2024 projection with good harvest yield');
+
+-- Seed data for REGIONAL_MARKET_STAT_T
+INSERT INTO REGIONAL_MARKET_STAT_T (Region, Year, GDP, Population, ProductID, Consumption, Notes) VALUES
+('North', 2024, 120000000000.00, 25000000, 1, 1200000, 'Northern region rice consumption patterns'),
+('North', 2024, 120000000000.00, 25000000, 2, 800000, 'Northern region wheat consumption patterns'),
+('South', 2024, 150000000000.00, 30000000, 1, 1500000, 'Southern region rice consumption patterns'),
+('South', 2024, 150000000000.00, 30000000, 2, 700000, 'Southern region wheat consumption patterns'),
+('East', 2024, 90000000000.00, 20000000, 1, 900000, 'Eastern region rice consumption patterns'),
+('East', 2024, 90000000000.00, 20000000, 2, 600000, 'Eastern region wheat consumption patterns'),
+('West', 2024, 110000000000.00, 22000000, 1, 1000000, 'Western region rice consumption patterns'),
+('West', 2024, 110000000000.00, 22000000, 2, 750000, 'Western region wheat consumption patterns');
+
+-- Seed data for MARKET_FORECAST_T
+INSERT INTO MARKET_FORECAST_T (ProductID, Year, ProjectedDemand, ProjectedSupply, ProjectedPrice, Confidence, FactorsConsidered) VALUES
+(1, 2024, 16200, 15500, 480.00, 85.00, 'Weather patterns, export trends, global economy'),
+(1, 2025, 17500, 16800, 510.00, 75.00, 'Climate projections, population growth, policy changes'),
+(1, 2026, 18700, 18200, 535.00, 65.00, 'Long-term climate trends, infrastructure development'),
+(1, 2027, 20000, 19500, 560.00, 55.00, 'Very long-term projection with multiple variables'),
+
+(2, 2024, 15000, 14500, 380.00, 85.00, 'Winter wheat yield, export contracts, storage levels'),
+(2, 2025, 16000, 15500, 395.00, 75.00, 'Climate projections, global demand patterns'),
+(2, 2026, 17000, 16500, 420.00, 65.00, 'Long-term consumption trends, production efficiency'),
+(2, 2027, 18000, 17500, 435.00, 55.00, 'Very long-term projection with multiple variables'),
+
+(3, 2024, 19000, 18200, 275.00, 85.00, 'Ethanol demand, livestock feed usage, export trends'),
+(3, 2025, 20000, 19500, 280.00, 75.00, 'Biofuel policies, feed industry growth'),
+(3, 2026, 21000, 20500, 290.00, 65.00, 'Long-term consumption trends, productivity advances'),
+(3, 2027, 22000, 21800, 300.00, 55.00, 'Very long-term projection with multiple variables'),
+
+(4, 2024, 13000, 12450, 460.00, 85.00, 'Protein demand, vegetable oil consumption, export markets'),
+(4, 2025, 14000, 13500, 480.00, 75.00, 'Asian import projections, crush capacity expansion'),
+(4, 2026, 15000, 14600, 510.00, 65.00, 'Long-term food industry trends, production technology'),
+(4, 2027, 16000, 15700, 530.00, 55.00, 'Very long-term projection with multiple variables'); 

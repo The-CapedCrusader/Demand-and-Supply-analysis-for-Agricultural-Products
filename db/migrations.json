@@ -1,0 +1,14 @@
+{
+  "migrations": [
+    {
+      "name": "20250507_create_market_analysis_tables",
+      "up": "db/migrations/20250507_create_market_analysis_tables_up.sql",
+      "down": "db/migrations/20250507_create_market_analysis_tables_down.sql"
+    },
+    {
+      "name": "20250507_seed_market_analysis_tables",
+      "up": "db/migrations/20250507_seed_market_analysis_tables_up.sql",
+      "down": "db/migrations/20250507_seed_market_analysis_tables_down.sql"
+    }
+  ]
+} 
