@@ -45,7 +45,7 @@
     "clsx": "^2.1.1",
     "isbot": "^5.1.26",
     "lucide-react": "^0.487.0",
-    "mysql2": "^3.14.0",
+    "mysql2": "^3.14.1",
     "react": "^19.1.0",
     "react-chartjs-2": "^5.3.0",
     "react-dom": "^19.1.0",
