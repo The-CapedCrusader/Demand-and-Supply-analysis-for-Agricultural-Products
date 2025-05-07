@@ -5,6 +5,7 @@ import type React from 'react';
 import { z } from 'zod';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useFetcher } from 'react-router';
 import { Button } from '~/components/ui/button';
 import { zodResolver } from '@hookform/resolvers/zod';
 
@@ -82,6 +83,7 @@ export function EditProductDialog({
   seasonalities,
 }: EditProductDialogProps) {
   const [open, setOpen] = useState(false);
+  const fetcher = useFetcher();
 
   // Initialize the form with product data
   const form = useForm<ProductFormValues>({
@@ -110,27 +112,29 @@ export function EditProductDialog({
   // Handle form submission
   async function onSubmit(data: ProductFormValues) {
     try {
-      await fetch('/products', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
+      fetcher.submit(
+        {
           ...data,
-          ProductID: product.ProductID, // Include the ProductID
-        }),
-      });
+          ProductID: product.ProductID,
+        },
+        {
+          method: 'PUT',
+          action: '/products',
+          encType: 'application/json',
+        }
+      );
 
       toast({
         title: 'Product updated',
         description: `${data.ProductName} has been updated successfully.`,
       });
+      setOpen(false);
     } catch (error) {
       toast({
         title: 'Error',
         variant: 'destructive',
         description: 'Failed to update product.',
       });
-    } finally {
-      setOpen(false);
     }
   }
 

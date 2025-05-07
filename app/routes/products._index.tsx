@@ -45,6 +45,7 @@ export async function loader(args: Route.LoaderArgs) {
 			JOIN PRODUCT_VARIETY_T pv ON p.VarietyID = pv.VarietyID
 			JOIN PRODUCT_CATEGORY_T pc ON pv.CategoryID = pc.CategoryID
 			JOIN PRODUCT_SEASONALITY_T ps ON p.SeasonalityID = ps.SeasonalityID
+			ORDER BY p.created_at DESC
 	`);
 
   const [productCategoryRows] = await db.query(
