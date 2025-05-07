@@ -4,6 +4,7 @@ import { SectionCards } from '~/components/section-cards';
 import { AppSidebar } from '~/components/navigation/app-sidebar';
 import { SidebarInset, SidebarProvider } from '~/components/ui/sidebar';
 import { ChartAreaInteractive } from '~/components/chart-area-interactive';
+//hello
 
 import { loader } from './route.loader';
 export { loader };
